@@ -2,6 +2,8 @@ import viteLogo from '/vite.svg';  // Đảm bảo đường dẫn tới file h�
 import reactLogo from './assets/react.svg';
 import React, { useState } from 'react';  // Thêm useState vào đây
 import Home from './components/Home/home';
+import Header from './components/Header/header';
+import Footer from './components/Footer/footer';
 import './App.css';
 function App() {
   const [count, setCount] = useState(0);
@@ -9,6 +11,7 @@ function App() {
   return (
     <>
       <div>
+        <Header />
         <Home />
         <div>
           <a href="https://vite.dev" target="_blank" rel="noopener noreferrer">
@@ -30,7 +33,7 @@ function App() {
         <p className="read-the-docs">
           Click on the Vite and React logos to learn more
         </p>
-
+        <Footer />
       </div>
     </>
   );
