@@ -9,7 +9,7 @@ function App() {
   return (
     <>
       <div>
-        {/* <Home /> */}
+        <Home />
         <div>
           <a href="https://vite.dev" target="_blank" rel="noopener noreferrer">
             <img src={viteLogo} className="logo" alt="Vite logo" />

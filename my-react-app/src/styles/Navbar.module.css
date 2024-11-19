@@ -1,0 +1,11 @@
+/* Đảm bảo phần tử chứa các MenuItem có display: flex */
+.menuItemNavbar {
+    display: flex;
+    /* Áp dụng flexbox */
+    justify-content: center;
+    /* Căn giữa các mục con */
+    align-items: center !important;
+    /* Căn giữa theo chiều dọc nếu cần */
+}
+
+/* không ăn css */

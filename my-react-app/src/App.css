@@ -1,14 +1,6 @@
 #root {
+  margin: 0 auto;
   text-align: center;
-}
-
-html,
-body,
-#root {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  width: 100%;
 }
 
 .logo {
@@ -48,26 +40,4 @@ body,
 
 .read-the-docs {
   color: #888;
-}
-
-.header {
-  background-color: #282c34;
-  height: 100%;
-  /* Nếu bạn không muốn full màn hình, có thể đặt height cố định, ví dụ: 60px */
-  width: 100%;
-  /* Đảm bảo header chiếm toàn bộ chiều ngang */
-  position: fixed;
-  /* Đặt vị trí cố định trên cùng */
-  top: 0;
-  /* Căn từ đỉnh trang */
-  left: 0;
-  /* Căn từ trái */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-  z-index: 999;
-  /* Đảm bảo header luôn hiển thị phía trên các phần tử khác */
 }
