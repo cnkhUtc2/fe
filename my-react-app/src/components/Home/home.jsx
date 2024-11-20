@@ -1,11 +1,11 @@
 import React from 'react';
-import Header from '../Header/header';
-import Footer from '../Footer/footer';
+import Slider from './sliderHome';
 
 const Home = () => {
     return (
         <div>
             <h1>Home</h1>
+            <Slider />
         </div>
     )
 };

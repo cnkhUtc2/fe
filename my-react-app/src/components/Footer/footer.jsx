@@ -2,7 +2,7 @@ import { Box, Typography, Grid } from '@mui/material';
 
 function Footer() {
     return (
-        <Box sx={{ backgroundColor: '#333', color: 'white', padding: '20px 0' }}>
+        <Box sx={{ backgroundColor: '#333', color: 'white', padding: '20px 0', width: '100%' }}>
             <Grid container spacing={3} justifyContent="center">
                 <Grid item>
                     <Typography variant="h6">About Us</Typography>

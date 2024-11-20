@@ -14,6 +14,7 @@ import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import styles from "/src/styles/Navbar.module.css";
 import SearchAppBar from './searchBar';
+import logoFinal from "../../assets/logo.png";
 
 const pages = ['Donate', 'Give Blood', 'Training & Certification', 'Volunteer', 'About Us', 'Get Help'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
@@ -41,7 +42,14 @@ function ResponsiveAppBar() {
         <AppBar position="block">
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
-                    <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+                    {/* <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} /> */}
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        <img
+                            src={logoFinal}
+                            alt="Logo"
+                            style={{ width: '80px', height: 'auto', borderRadius: '100%' }}
+                        />
+                    </div>
                     <Typography
                         variant="h6"
                         noWrap
@@ -56,7 +64,7 @@ function ResponsiveAppBar() {
                             textDecoration: 'none',
                         }}
                     >
-                        LOGO
+                        AidBridge
                     </Typography>
 
                     <Box
