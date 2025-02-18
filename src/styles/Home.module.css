@@ -1,0 +1,12 @@
+.title {
+    display: inline-block;
+    /* Để border vừa với text */
+    text-align: center;
+    font-size: 2em;
+    font-weight: bold;
+    margin: 20px auto;
+    border-bottom: 2px solid black;
+    /* Độ dày & màu gạch chân */
+    padding-bottom: 5px;
+    /* Khoảng cách giữa chữ & gạch */
+}

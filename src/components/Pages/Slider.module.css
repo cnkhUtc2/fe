@@ -1,0 +1,32 @@
+/* Slider.module.css */
+.sliderContent {
+    max-width: 100%;
+    width: 100%;
+    /* Set max width */
+    margin: 0 auto;
+    /* Center it */
+    overflow: hidden;
+    /* Prevent overflow */
+    display: flex;
+}
+
+.slide {
+    flex: 0 0 100%;
+    /* Each slide takes full width */
+    transition: transform 0.5s ease-in-out;
+}
+
+.slide img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    /* Optional: Add rounded corners */
+}
+
+.active {
+    opacity: 1;
+}
+
+.inactive {
+    opacity: 0;
+}

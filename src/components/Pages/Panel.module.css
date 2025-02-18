@@ -1,0 +1,51 @@
+.panel {
+    display: flex;
+    align-items: center;
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 20px 50px;
+    width: 80%;
+
+}
+
+.textContainer {
+    flex: 1;
+}
+
+.title {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.content {
+    font-size: 16px;
+    color: #555;
+}
+
+.button {
+    background: #ff5733;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+.button:hover {
+    background: #e64a29;
+}
+
+/* Image Styling */
+.imageContainer {
+    flex: 1;
+    /* Điều chỉnh kích thước ảnh */
+}
+
+.image {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
