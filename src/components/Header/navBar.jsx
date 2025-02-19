@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState } from "react";
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -16,6 +16,7 @@ import styles from "/src/styles/Navbar.module.css";
 import SearchAppBar from './searchBar';
 import logoFinal from "../../assets/logo.png";
 import { useNavigate } from "react-router-dom";
+
 
 const pages = [
     { name: 'Donate', path: '/donate' },
@@ -37,6 +38,12 @@ function ResponsiveAppBar() {
     const navigate = useNavigate();  // Khai báo useNavigate()
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
+
+    const [open, setOpen] = useState(false);
+
+    const handleToggleTooltip = () => {
+        setOpen(!open);
+    };
 
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);
@@ -157,9 +164,13 @@ function ResponsiveAppBar() {
                     </Box>
                     <SearchAppBar />
                     <Box sx={{ flexGrow: 0 }}>
-                        <Tooltip title="Open settings">
-                            <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                        <Button variant="contained" onClick={handleToggleTooltip}>
+                            Đăng nhập
+                        </Button>
+
+                        <Tooltip title="Open settings" open={open} arrow>
+                            <IconButton sx={{ p: 0, marginLeft: 2 }}>
+                                <Avatar alt="User Avatar" src="/static/images/avatar/2.jpg" />
                             </IconButton>
                         </Tooltip>
                         <Menu
