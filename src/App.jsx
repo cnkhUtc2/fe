@@ -36,6 +36,7 @@ import Account from "./Pages/Account";
 import Dashboard from "./Pages/Dashboard";
 import Footer from "./components/Footer/footer";
 import Blog from "./Pages/Blog";
+import Messenger from "./Pages/messenger/Messenger";
 
 function App() {
   return (
@@ -53,6 +54,7 @@ function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/account" element={<Account />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/messenger" element={<Messenger />} />
       </Routes>
 
       <Footer />
