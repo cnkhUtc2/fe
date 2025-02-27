@@ -3,14 +3,14 @@ import Conversation from "../../components/conversations/Conversation";
 import Message from "../../components/message/Message";
 import { useContext, useEffect, useRef, useState } from "react";
 import UserContext from "../../../UserContext";
-// import {
-//   createMessage,
-//   getConversations,
-//   getMessages,
-// } from "../../apis/services/ChatService";
 import { useParams } from "react-router-dom";
 import { getSocket } from "../../../socket";
-// import { getById } from "../../apis/services/UserService";
+import { getById } from "../../apis/services/UserService";
+import {
+  createMessage,
+  getConversations,
+  getMessages,
+} from "../../apis/services/ChatService";
 
 export default function Messenger() {
   const [conversations, setConversations] = useState([]);
@@ -25,11 +25,11 @@ export default function Messenger() {
   const { friendId } = useParams("friendId");
 
   useEffect(() => {
-    // const fetchCurrentUser = async () => {
-    //   const res = await getById(user?._id);
-    //   setCurrentUSer(res.data);
-    // };
-    // fetchCurrentUser();
+    const fetchCurrentUser = async () => {
+      const res = await getById(user?._id);
+      setCurrentUSer(res.data);
+    };
+    fetchCurrentUser();
   }, []);
 
   useEffect(() => {
@@ -58,11 +58,11 @@ export default function Messenger() {
   }, [user, socket]);
 
   useEffect(() => {
-    // const fetchConversations = async () => {
-    //   const res = await getConversations(user?._id);
-    //   setConversations(res.data);
-    // };
-    // fetchConversations();
+    const fetchConversations = async () => {
+      const res = await getConversations(user?._id);
+      setConversations(res.data);
+    };
+    fetchConversations();
   }, [user?._id]);
 
   useEffect(() => {
@@ -77,33 +77,34 @@ export default function Messenger() {
   }, [friendId, conversations]);
 
   useEffect(() => {
-    // const fetchMessages = async () => {
-    //   if (currentChat?._id) {
-    //     const res = await getMessages(currentChat._id);
-    //     setMessages(res.data);
-    //   }
-    // };
-    // fetchMessages();
+    const fetchMessages = async () => {
+      if (currentChat?._id) {
+        const res = await getMessages(currentChat?._id);
+        setMessages(res.data);
+        console.log(messages);
+      }
+    };
+    fetchMessages();
   }, [currentChat]);
 
   const handleSubmit = async (e) => {
-    // e.preventDefault();
-    // const message = {
-    //   sender: user?._id,
-    //   text: newMessage,
-    //   conversation: currentChat._id,
-    // };
-    // const receiverId = currentChat.members.find(
-    //   (member) => member !== user._id
-    // );
-    // socket.emit("sendMessage", {
-    //   senderId: user._id,
-    //   receiverId,
-    //   text: newMessage,
-    // });
-    // const res = await createMessage(message);
-    // setMessages([...messages, res.data]);
-    // setNewMessage("");
+    e.preventDefault();
+    const message = {
+      sender: user?._id,
+      text: newMessage,
+      conversation: currentChat._id,
+    };
+    const receiverId = currentChat.members.find(
+      (member) => member !== user._id
+    );
+    socket.emit("sendMessage", {
+      senderId: user._id,
+      receiverId,
+      text: newMessage,
+    });
+    const res = await createMessage(message);
+    setMessages([...messages, res.data]);
+    setNewMessage("");
   };
 
   useEffect(() => {
@@ -130,7 +131,7 @@ export default function Messenger() {
           {currentChat ? (
             <>
               <div className={styles.chatBoxTop}>
-                {messages.map((m, key) => (
+                {messages?.map((m, key) => (
                   <div key={key} ref={scrollRef}>
                     <Message
                       message={m}

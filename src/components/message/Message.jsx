@@ -1,16 +1,16 @@
 import { useEffect, useState } from "react";
 import styles from "../../styles/message.module.css";
 import { formatDistanceToNow, format } from "date-fns";
-// import { getById } from "../../apis/services/UserService";
+import { getById } from "../../apis/services/UserService";
 
 export default function Message({ message, own, currentUser, friend }) {
   const [friendd, setFriend] = useState({});
   useEffect(() => {
-    // const fetchFriend = async () => {
-    //   const res = await getById(friend);
-    //   setFriend(res.data);
-    // };
-    // fetchFriend();
+    const fetchFriend = async () => {
+      const res = await getById(friend);
+      setFriend(res.data);
+    };
+    fetchFriend();
   }, []);
 
   const createdAt = new Date(message.createdAt);
