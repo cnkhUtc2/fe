@@ -15,7 +15,10 @@
     "@fontsource/roboto": "^5.1.0",
     "@mui/icons-material": "^6.1.7",
     "@mui/material": "^6.1.7",
+<<<<<<< HEAD
     "@tailwindcss/vite": "^4.0.9",
+=======
+>>>>>>> 2b2727521d21dd1c7632fcd235f0985e72d5f360
     "axios": "^1.8.1",
     "bootstrap": "^5.3.3",
     "date-fns": "^4.1.0",
