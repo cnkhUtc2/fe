@@ -15,11 +15,7 @@
     "@fontsource/roboto": "^5.1.0",
     "@mui/icons-material": "^6.1.7",
     "@mui/material": "^6.1.7",
-<<<<<<< HEAD
     "@shadcn/ui": "^0.0.4",
-=======
-    "@tailwindcss/vite": "^4.0.9",
->>>>>>> b2c2bdcbb7174dfdba270f1e4f41c65a6c3d96df
     "axios": "^1.8.1",
     "bootstrap": "^5.3.3",
     "date-fns": "^4.1.0",
@@ -32,6 +28,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.13.0",
+    "@tailwindcss/vite": "^4.0.9",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
     "@vitejs/plugin-react": "^4.3.3",
