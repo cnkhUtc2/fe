@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -15,7 +15,7 @@ import AdbIcon from '@mui/icons-material/Adb';
 import styles from "/src/styles/Navbar.module.css";
 import SearchAppBar from './searchBar';
 import logoFinal from "../../assets/logo.png";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 
 const pages = [
@@ -27,21 +27,33 @@ const pages = [
     { name: 'Get Help', path: '/help' }
 ];
 
-const settings = [
-    { name: 'Profile', path: '/profile' },
-    { name: 'Account', path: '/account' },
-    { name: 'Dashboard', path: '/dashboard' },
-    { name: 'Logout', path: '/logout' }
-];
 
 function ResponsiveAppBar() {
     const navigate = useNavigate();  // Khai báo useNavigate()
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
-
     const [open, setOpen] = useState(false);
+    const [user, setUser] = useState(null);
+    const settings = [
+        { name: 'Profile', path: '/profile' },
+        { name: 'Account', path: '/account' },
+        { name: 'Dashboard', path: '/dashboard' },
+        { name: 'Logout', action: () => handleLogout() }  // Gọi handleLogout đúng cách
+    ];
+
+    useEffect(() => {
+        const storedUser = localStorage.getItem('user');
+        if (storedUser) {
+          setUser(JSON.parse(storedUser)); // Lấy thông tin user từ localStorage
+        }
+      }, []);
 
 
+    const handleLogout = () => {
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        setUser(null);
+      };    
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);
     };
@@ -59,7 +71,13 @@ function ResponsiveAppBar() {
     const handleLoginClick = () => {
         navigate('/signin'); // Chuyển trang sang /signin
       };
-
+      const handleMenuClick = (setting) => {
+        if (setting.action) {
+            setting.action();  // Gọi hàm logout nếu có
+        } else {
+            navigate(setting.path);  // Điều hướng bình thường
+        }
+    };
     return (
         <AppBar position="block">
             <Container maxWidth="xl">
@@ -164,15 +182,21 @@ function ResponsiveAppBar() {
                     </Box>
                     <SearchAppBar />
                     <Box sx={{ flexGrow: 0 }}>
-                        <Button variant="contained" onClick={handleLoginClick}>
-                            Đăng nhập
-                        </Button>
-
-                        <Tooltip title="Open settings" open={open} arrow>
-                            <IconButton sx={{ p: 0, marginLeft: 2 }} onClick={handleOpenUserMenu}>
+                        {user ? (
+                            <>
+                            <Tooltip title="Open settings" open={open} arrow>
+                            <IconButton sx={{ p: 0, marginLeft: 2,marginRight: 2 }} onClick={handleOpenUserMenu}>
                                 <Avatar alt="User Avatar" src="/static/images/avatar/2.jpg" />
                             </IconButton>
                         </Tooltip>
+                            </>
+                        ) : (
+                            <Button variant="contained" onClick={handleLoginClick}>
+                                Đăng nhập
+                            </Button>
+                        )}
+
+
                         <Menu
                             sx={{ mt: '45px' }}
                             id="menu-appbar"
@@ -189,11 +213,18 @@ function ResponsiveAppBar() {
                             open={Boolean(anchorElUser)}
                             onClose={handleCloseUserMenu}
                         >
-                            {settings.map((setting) => (
-                                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                                    <Typography sx={{ textAlign: 'center' }}>{setting.name}</Typography>
-                                </MenuItem>
-                            ))}
+{settings.map((setting) => (
+    <MenuItem 
+        key={setting.name} 
+        onClick={() => {
+            handleCloseUserMenu();  // Đóng menu trước
+            handleMenuClick(setting);  // Gọi action hoặc điều hướng
+        }}
+    >
+        <Typography sx={{ textAlign: 'center' }}>{setting.name}</Typography>
+    </MenuItem>
+))}
+
                         </Menu>
                     </Box>
                 </Toolbar>

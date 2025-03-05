@@ -17,6 +17,7 @@ import Blog from "./Pages/Blog";
 import Messenger from "./Pages/messenger/Messenger";
 import Signin from "./Pages/sign-in/SignIn";
 import { UserProvider } from "../UserContext";
+import RegisterPage from "./Pages/sign-in/RegisterPage";
 
 function App() {
   return (
@@ -37,7 +38,7 @@ function App() {
           <Route path="/account" element={<Account />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/messenger" element={<Messenger />} />
-          
+          <Route path="/register" element={<RegisterPage/>} />
         </Routes>
 
         <Footer />

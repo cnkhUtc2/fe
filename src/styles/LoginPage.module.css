@@ -21,7 +21,7 @@ body, html {
     padding: 40px;
     border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    width: 300px;
+    width: 500px;
     text-align: center;
   }
   
@@ -63,5 +63,100 @@ body, html {
   
   .login-form button:hover {
     background: #5a67d8;
+  }
+  .login-form {
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-width: 800px;
+    margin: auto;
+  }
+  
+  .error-message {
+    color: red;
+    text-align: center;
+    font-size: 14px;
+  }
+  
+  .login-button {
+    background-color: #1976d2;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.3s;
+  }
+  
+  .login-button:hover {
+    background-color: #1565c0;
+  }
+  
+  .form-control {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .form-control label {
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+  .form-control input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .google-button,
+  .facebook-button {
+    width: 48%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  
+  .google-button {
+    background-color: #db4437;
+    color: white;
+    margin: 10px 10px 10px 10px auto;
+
+  }
+  
+  .google-button:hover {
+    background-color: #c1351d;
+  }
+  
+  .facebook-button {
+    background-color: #1877f2;
+    color: white;
+    margin: 10px 10px 10px 10px auto;
+
+  }
+  
+  .facebook-button:hover {
+    background-color: #125abe;
+  }
+  
+  @media (max-width: 480px) {
+    .login-form {
+      padding: 20px;
+    }
+  
+    .google-button,
+    .facebook-button {
+      width: 100%;
+    }
   }
   
