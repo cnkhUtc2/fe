@@ -24,7 +24,8 @@ const pages = [
     { name: 'Training & Certification', path: '/training' },
     { name: 'Volunteer', path: '/volunteer' },
     { name: 'About Us', path: '/about' },
-    { name: 'Get Help', path: '/help' }
+    { name: 'Get Help', path: '/help' },
+    { name: 'Post', path: '/post'}
 ];
 
 
