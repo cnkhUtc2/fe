@@ -18,6 +18,7 @@ import Messenger from "./Pages/messenger/Messenger";
 import Signin from "./Pages/sign-in/SignIn";
 import { UserProvider } from "../UserContext";
 import RegisterPage from "./Pages/sign-in/RegisterPage";
+import Post from "./Pages/Post";
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
           <Route path="/volunteer" element={<Volunteer />} />
           <Route path="/about" element={<About />} />
           <Route path="/help" element={<GetHelp />} />
+          <Route path="/post" element={<Post/>}/>
           <Route path="/profile" element={<Profile />} />
           <Route path="/account" element={<Account />} />
           <Route path="/dashboard" element={<Dashboard />} />
