@@ -5,7 +5,7 @@ const apiClient = axios.create({
   baseURL: API_URL,
 });
 
-apiClient.interceptors.request.use(
+apiClient.interceptors.request.use( 
   (config) => {
     const token =
       localStorage.getItem("token") || sessionStorage.getItem("token");
@@ -21,4 +21,3 @@ apiClient.interceptors.request.use(
 );
 
 export default apiClient;
-/*jkdfads*/
