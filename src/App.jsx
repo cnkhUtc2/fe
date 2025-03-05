@@ -1,25 +1,3 @@
-// import viteLogo from '/vite.svg';  // Đảm bảo đường dẫn tới file hình ảnh là đúng
-// import reactLogo from './assets/react.svg';
-// import React, { useState } from 'react';  // Thêm useState vào đây
-// import Home from './components/Home/home';
-// import Header from './components/Header/header';
-// import Footer from './components/Footer/footer';
-// import './App.css';
-// function App() {
-//   const [count, setCount] = useState(0);
-
-//   return (
-//     <>
-//       <div>
-//         <Header />
-//         <Home />
-//         <Footer />
-//       </div>
-//     </>
-//   );
-// }
-
-// export default App;
 
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -37,7 +15,7 @@ import Dashboard from "./Pages/Dashboard";
 import Footer from "./components/Footer/footer";
 import Blog from "./Pages/Blog";
 import Messenger from "./Pages/messenger/Messenger";
-import Signin from "./Pages/sign-in/Signin";
+import Signin from "./Pages/sign-in/SignIn";
 import { UserProvider } from "../UserContext";
 
 function App() {
@@ -59,6 +37,7 @@ function App() {
           <Route path="/account" element={<Account />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/messenger" element={<Messenger />} />
+          
         </Routes>
 
         <Footer />

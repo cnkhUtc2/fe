@@ -41,9 +41,6 @@ function ResponsiveAppBar() {
 
     const [open, setOpen] = useState(false);
 
-    const handleToggleTooltip = () => {
-        setOpen(!open);
-    };
 
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);
@@ -59,6 +56,9 @@ function ResponsiveAppBar() {
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
     };
+    const handleLoginClick = () => {
+        navigate('/signin'); // Chuyển trang sang /signin
+      };
 
     return (
         <AppBar position="block">
@@ -164,12 +164,12 @@ function ResponsiveAppBar() {
                     </Box>
                     <SearchAppBar />
                     <Box sx={{ flexGrow: 0 }}>
-                        <Button variant="contained" onClick={handleToggleTooltip}>
+                        <Button variant="contained" onClick={handleLoginClick}>
                             Đăng nhập
                         </Button>
 
                         <Tooltip title="Open settings" open={open} arrow>
-                            <IconButton sx={{ p: 0, marginLeft: 2 }}>
+                            <IconButton sx={{ p: 0, marginLeft: 2 }} onClick={handleOpenUserMenu}>
                                 <Avatar alt="User Avatar" src="/static/images/avatar/2.jpg" />
                             </IconButton>
                         </Tooltip>

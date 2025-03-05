@@ -1,0 +1,67 @@
+/* Đặt background cho toàn trang */
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+  }
+  
+  /* Canh giữa form đăng nhập */
+  .login-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+  }
+  
+  /* Định dạng form đăng nhập */
+  .login-form {
+    background: #fff;
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    width: 300px;
+    text-align: center;
+  }
+  
+  .login-form h2 {
+    margin-bottom: 20px;
+  }
+  
+  /* Định dạng từng trường nhập liệu */
+  .form-control {
+    margin-bottom: 15px;
+    text-align: left;
+  }
+  
+  .form-control label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+  
+  .form-control input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  
+  /* Định dạng nút đăng nhập */
+  .login-form button {
+    width: 100%;
+    padding: 10px;
+    background: #667eea;
+    border: none;
+    color: #fff;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: opacity 0.5s ease-in-out, transform 0.3s linear;
+  }
+  
+  .login-form button:hover {
+    background: #5a67d8;
+  }
+  
