@@ -10,8 +10,8 @@ export const UserProvider = ({ children }) => {
     ? (() => {
         const decodedToken = jwtDecode(token);
         return {
-          username: decodedToken.username,
-          role: decodedToken.role,
+          username: decodedToken.name,
+          roleId: decodedToken.roleId,
           _id: decodedToken._id,
           email: decodedToken.email,
         };
