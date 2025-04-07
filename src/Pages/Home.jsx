@@ -8,7 +8,7 @@ import Grid from "@mui/material/Grid";
 import Blog from "./Blog";
 import ImgMediaCard from "./ImgCard";
 import styles from "../styles/Home.module.css";
-import DonatePanel from "./DonatePanel";
+import DonatePanel from "./donate/DonatePanel";
 
 const Home = () => {
   return (
