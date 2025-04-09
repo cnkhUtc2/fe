@@ -1,7 +1,7 @@
 import React from "react";
-
+import Hero from "./Hero"; // Import component Hero
 function GetHelp() {
-    return <h1>About Us</h1>;
+    return Hero();
 }
 
 export default GetHelp;  // ✅ Cần có dòng này!
