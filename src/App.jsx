@@ -6,7 +6,7 @@ import GiveBlood from "./Pages/GiveBlood";
 import Training from "./Pages/Training";
 import Volunteer from "./Pages/Volunteer";
 import About from "./Pages/About";
-import GetHelp from "./Pages/GetHelp";
+import GetHelp from "./Pages/getHelp/GetHelp";
 import Profile from "./Pages/Profile";
 import Account from "./Pages/Account";
 import Dashboard from "./Pages/Dashboard";
