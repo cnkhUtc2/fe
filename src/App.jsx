@@ -10,7 +10,7 @@ import GetHelp from "./Pages/getHelp/GetHelp";
 import Profile from "./Pages/Profile";
 import Account from "./Pages/Account";
 import Dashboard from "./Pages/Dashboard";
-import Footer from "./components/Footer/footer";
+import Footer from "./components/Footer/Footer";
 import Blog from "./Pages/Blog";
 import Messenger from "./Pages/messenger/Messenger";
 import Signin from "./Pages/sign-in/SignIn";
