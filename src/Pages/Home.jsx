@@ -1,6 +1,6 @@
 import React from "react";
 import Slider from "./sliderHome";
-import Panel from "./panel";
+import Panel from "./Panel";
 import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
