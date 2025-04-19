@@ -3,6 +3,7 @@ import styles from "../../styles/LoginPage.module.css";
 import { useNavigate } from "react-router-dom";
 import { TextField, Button, Container, Typography, Box } from "@mui/material";
 import { Google, Facebook } from "@mui/icons-material";
+import { jwtDecode } from 'jwt-decode';
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -15,7 +16,7 @@ const LoginPage = () => {
     setError("");
 
     try {
-      const response = await fetch("http://localhost:3000/api/front/auth/login", {
+      const response = await fetch("https://be-xrlo.onrender.com/api/front/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
@@ -24,12 +25,19 @@ const LoginPage = () => {
       const data = await response.json();
 
       if (!response.ok || !data?.data?.accessToken) throw new Error(data.message || "Đăng nhập thất bại")
-        else
-      {
-        localStorage.setItem("accessToken", data.data.accessToken);
-        localStorage.setItem("user", JSON.stringify({ name: "John Doe" })); // Lấy từ API sau
+      else {
+        const decoded = jwtDecode(data.data.accessToken);
+        const user = {
+          _id: decoded._id,
+          name: decoded.name,
+          email: decoded.email,
+          roleId: decoded.roleId,
+        };
+        localStorage.setItem("token", data.data.accessToken);
+        localStorage.setItem("user", JSON.stringify(user));
+        window.dispatchEvent(new Event("userLoggedIn"));
         navigate("/");
-        window.location.reload();
+
       }
 
     } catch (err) {
@@ -86,7 +94,7 @@ const LoginPage = () => {
 
         <Box textAlign="center" mt={2}>
           <Typography variant="body2" >
-            Chưa có tài khoản? <span style={{ color: "blue", cursor: "pointer" }}     onClick={() => navigate("/register")}>Đăng ký</span>
+            Chưa có tài khoản? <span style={{ color: "blue", cursor: "pointer" }} onClick={() => navigate("/register")}>Đăng ký</span>
           </Typography>
         </Box>
       </form>

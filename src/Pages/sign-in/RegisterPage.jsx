@@ -18,10 +18,10 @@ const Register = () => {
     e.preventDefault();
     setError(null);
     try {
-      const response = await axios.post("http://localhost:3000/api/front/auth/register", formData);
+      const response = await axios.post("https://be-xrlo.onrender.com/api/front/auth/register", formData);
       console.log("User created:", response.data);
       // Xóa nội dung form
-    setFormData({
+      setFormData({
         name: "",
         email: "",
         password: "",
@@ -29,14 +29,14 @@ const Register = () => {
       });
       alert("Đăng ký thành công!");
     } catch (err) {
-        // Xóa nội dung form
-    setFormData({
+      // Xóa nội dung form
+      setFormData({
         name: "",
         email: "",
         password: "",
         role: "667b7b83462a35d0fbe5d251",
       });
-      setError("Registration failed. Please try again.",err);
+      setError("Registration failed. Please try again.", err);
     }
   };
 

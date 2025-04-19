@@ -9,7 +9,6 @@ import About from "./Pages/About";
 import GetHelp from "./Pages/getHelp/GetHelp";
 import Profile from "./Pages/Profile";
 import Account from "./Pages/Account";
-import Dashboard from "./Pages/Dashboard";
 import Footer from "./components/Footer/footer";
 import Blog from "./Pages/Blog";
 import Messenger from "./Pages/messenger/Messenger";
@@ -20,6 +19,7 @@ import Post from "./Pages/Post";
 import DonatePanel from "./Pages/donate/DonatePanel";
 import PaySuccess from "./Pages/donate/PaySuccess";
 import PayFail from "./Pages/donate/PayFail";
+import AdminDashboard from "./Pages/admin/Dashboard";
 
 function App() {
   return (
@@ -41,9 +41,9 @@ function App() {
           <Route path="/post" element={<Post />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/account" element={<Account />} />
-          <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/messenger" element={<Messenger />} />
           <Route path="/register" element={<RegisterPage />} />
+          <Route path="/admin" element={<AdminDashboard />} />
         </Routes>
         <Footer />
       </UserProvider>
