@@ -9,8 +9,6 @@ import About from "./Pages/About";
 import GetHelp from "./Pages/getHelp/GetHelp";
 import Profile from "./Pages/Profile";
 import Account from "./Pages/Account";
-import Footer from "./components/Footer/footer";
-import Dashboard from "./Pages/Dashboard";
 import Footer from "./components/Footer/Footer";
 import Blog from "./Pages/Blog";
 import Messenger from "./Pages/messenger/Messenger";
