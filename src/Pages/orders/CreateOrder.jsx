@@ -105,6 +105,8 @@ export default function CreateOrder() {
     setFormSubmitting(true);
 
     try {
+      console.log(formData);
+
       const response = await createOrder(formData);
 
       if (response) {
