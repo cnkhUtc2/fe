@@ -21,6 +21,9 @@ import PaySuccess from "./Pages/donate/PaySuccess";
 import PayFail from "./Pages/donate/PayFail";
 import DonateItems from "./Pages/donate/DonateItems";
 import DonateItemsSuccess from "./Pages/donate/DonateItemsSuccess";
+import Orders from "./Pages/orders/Orders";
+import OrderDetail from "./Pages/orders/OrderDetail";
+import CreateOrder from "./Pages/orders/CreateOrder";
 import AdminDashboard from "./Pages/admin/Dashboard";
 
 function App() {
@@ -37,6 +40,13 @@ function App() {
           <Route path="/donate/success" element={<DonateItemsSuccess />} />
           <Route path="/payment-success" element={<PaySuccess />} />
           <Route path="/payment-fail" element={<PayFail />} />
+          <Route path="/orders" element={<Orders />} />
+          <Route path="/orders/:id" element={<OrderDetail />} />
+          <Route path="/orders/create" element={<CreateOrder />} />
+          <Route
+            path="/orders/create/:donationItemId"
+            element={<CreateOrder />}
+          />
           <Route path="/give-blood" element={<GiveBlood />} />
           <Route path="/training" element={<Training />} />
           <Route path="/volunteer" element={<Volunteer />} />

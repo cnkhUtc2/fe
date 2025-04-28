@@ -108,9 +108,11 @@ export default function DonateItems() {
 
       const response = await createDonationItem(data);
 
-      if (response) {
+      if (response && response._id) {
         alert("Thank you for your donation!");
-        navigate("/donate/success");
+        navigate(`/donate/success?id=${response._id}`);
+      } else {
+        throw new Error("Failed to create donation");
       }
     } catch (error) {
       console.error("Donation error:", error);
