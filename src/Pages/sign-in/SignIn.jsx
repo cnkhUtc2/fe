@@ -3,7 +3,8 @@ import styles from "../../styles/LoginPage.module.css";
 import { useNavigate } from "react-router-dom";
 import { TextField, Button, Container, Typography, Box } from "@mui/material";
 import { Google, Facebook } from "@mui/icons-material";
-import { jwtDecode } from 'jwt-decode';
+import { jwtDecode } from "jwt-decode";
+import { signin } from "../../apis/services/AuthService";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -16,42 +17,27 @@ const LoginPage = () => {
     setError("");
 
     try {
-      const response = await fetch("https://be-xrlo.onrender.com/api/front/auth/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
-      });
-
-      const data = await response.json();
-
-      if (!response.ok || !data?.data?.accessToken) throw new Error(data.message || "Đăng nhập thất bại")
-      else {
-        const decoded = jwtDecode(data.data.accessToken);
-        const user = {
-          _id: decoded._id,
-          name: decoded.name,
-          email: decoded.email,
-          roleId: decoded.roleId,
-        };
-        localStorage.setItem("token", data.data.accessToken);
-        localStorage.setItem("user", JSON.stringify(user));
-        window.dispatchEvent(new Event("userLoggedIn"));
-        navigate("/");
-
-      }
-
+      const response = await signin({ email, password });
+      localStorage.setItem("token", response.data?.accessToken);
+      window.dispatchEvent(new Event("userLoggedIn"));
+      navigate("/");
     } catch (err) {
       setError(err.message);
-      console.error("Đăng nhập thất bại:", err);
+      console.error("Sign in fail", err);
     }
   };
 
   return (
     <Container maxWidth="xs">
-
       <form className={styles["login-form"]} onSubmit={handleSubmit}>
-        <Typography variant="h5" align="center">Đăng nhập</Typography>
-        {error && <Typography color="error" align="center">{error}</Typography>}
+        <Typography variant="h5" align="center">
+          Login
+        </Typography>
+        {error && (
+          <Typography color="error" align="center">
+            {error}
+          </Typography>
+        )}
 
         <TextField
           label="Email"
@@ -74,27 +60,47 @@ const LoginPage = () => {
         />
 
         <Box textAlign="right" mb={2}>
-          <Typography variant="body2" color="primary" style={{ cursor: "pointer" }}>
-            Quên mật khẩu?
+          <Typography
+            variant="body2"
+            color="primary"
+            style={{ cursor: "pointer" }}
+          >
+            Forgot password?
           </Typography>
         </Box>
 
         <Button variant="contained" color="primary" fullWidth type="submit">
-          ĐĂNG NHẬP
+          LOGIN
         </Button>
 
         <Box display="flex" justifyContent="space-between" mt={2} gap={2}>
-          <Button variant="contained" color="error" className={styles["google-button"]} startIcon={<Google />}>
+          <Button
+            variant="contained"
+            color="error"
+            className={styles["google-button"]}
+            startIcon={<Google />}
+          >
             Google
           </Button>
-          <Button variant="contained" color="primary" className={styles["facebook-button"]} startIcon={<Facebook />}>
+          <Button
+            variant="contained"
+            color="primary"
+            className={styles["facebook-button"]}
+            startIcon={<Facebook />}
+          >
             Facebook
           </Button>
         </Box>
 
         <Box textAlign="center" mt={2}>
-          <Typography variant="body2" >
-            Chưa có tài khoản? <span style={{ color: "blue", cursor: "pointer" }} onClick={() => navigate("/register")}>Đăng ký</span>
+          <Typography variant="body2">
+            Don't have account ?{" "}
+            <span
+              style={{ color: "blue", cursor: "pointer" }}
+              onClick={() => navigate("/register")}
+            >
+              Register
+            </span>
           </Typography>
         </Box>
       </form>
