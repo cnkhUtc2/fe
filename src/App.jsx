@@ -9,7 +9,6 @@ import About from "./Pages/About";
 import GetHelp from "./Pages/getHelp/GetHelp";
 import Profile from "./Pages/Profile";
 import Account from "./Pages/Account";
-import Dashboard from "./Pages/Dashboard";
 import Footer from "./components/Footer/Footer";
 import Blog from "./Pages/Blog";
 import Messenger from "./Pages/messenger/Messenger";
@@ -20,6 +19,12 @@ import Post from "./Pages/Post";
 import DonatePanel from "./Pages/donate/DonatePanel";
 import PaySuccess from "./Pages/donate/PaySuccess";
 import PayFail from "./Pages/donate/PayFail";
+import DonateItems from "./Pages/donate/DonateItems";
+import DonateItemsSuccess from "./Pages/donate/DonateItemsSuccess";
+import Orders from "./Pages/orders/Orders";
+import OrderDetail from "./Pages/orders/OrderDetail";
+import CreateOrder from "./Pages/orders/CreateOrder";
+import AdminDashboard from "./Pages/admin/Dashboard";
 
 function App() {
   return (
@@ -31,8 +36,17 @@ function App() {
           <Route path="/signin" element={<Signin />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/donate" element={<DonatePanel />} />
+          <Route path="/donate/items" element={<DonateItems />} />
+          <Route path="/donate/success" element={<DonateItemsSuccess />} />
           <Route path="/payment-success" element={<PaySuccess />} />
           <Route path="/payment-fail" element={<PayFail />} />
+          <Route path="/orders" element={<Orders />} />
+          <Route path="/orders/:id" element={<OrderDetail />} />
+          <Route path="/orders/create" element={<CreateOrder />} />
+          <Route
+            path="/orders/create/:donationItemId"
+            element={<CreateOrder />}
+          />
           <Route path="/give-blood" element={<GiveBlood />} />
           <Route path="/training" element={<Training />} />
           <Route path="/volunteer" element={<Volunteer />} />
@@ -41,9 +55,9 @@ function App() {
           <Route path="/post" element={<Post />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/account" element={<Account />} />
-          <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/messenger" element={<Messenger />} />
           <Route path="/register" element={<RegisterPage />} />
+          <Route path="/admin" element={<AdminDashboard />} />
         </Routes>
         <Footer />
       </UserProvider>
