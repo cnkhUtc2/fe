@@ -7,6 +7,8 @@ import {
   ChevronDown,
   Layout,
 } from "lucide-react";
+import ManageTicket from "./tickets/MangeTicket";
+import TicketDetail from "./tickets/TicketDetail";
 
 export default function AdminDashboard() {
   const [activeMenu, setActiveMenu] = useState(null);
@@ -33,6 +35,7 @@ export default function AdminDashboard() {
       submenu: true,
       submenuItems: [
         { title: "Manage tickets", path: "/manage-support-tickets" },
+        { title: "Ticket detail", path: "/ticket-detail" },
         { title: "Create relief case", path: "/create-relief-case" },
         { title: "Manage relief case", path: "/manage-relief-cases" },
       ],
@@ -188,18 +191,7 @@ export default function AdminDashboard() {
             {/* Page-specific content */}
             {activePath !== "/dashboard" && (
               <div className="bg-gray-100 p-4 rounded-lg">
-                {activePath === "/create-course" && "a"}
-                {activePath === "/manage-course" && (
-                  <div>Manage Course Component Here</div>
-                )}
-                {activePath === "/create-post" && "b"}
-                {activePath === "/manage-post" && "c"}
-                {activePath === "/create-student" && (
-                  <div>Create Student Form Here</div>
-                )}
-                {activePath === "/manage-student" && (
-                  <div>Manage Students Here</div>
-                )}
+                {activePath === "/manage-support-tickets" && <ManageTicket />}
               </div>
             )}
           </div>

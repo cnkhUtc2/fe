@@ -30,24 +30,6 @@ export default function PaySuccess() {
           </p>
         </div>
 
-        <div className="bg-gray-50 p-4 rounded-md mb-6">
-          <h3 className="font-medium text-gray-700 mb-2">Donation details:</h3>
-          <div className="text-sm text-gray-600 space-y-2">
-            <div className="flex justify-between">
-              <span>Confirmation #:</span>
-              <span className="font-medium">DON-12345678</span>
-            </div>
-            <div className="flex justify-between">
-              <span>Date:</span>
-              <span className="font-medium">April 7, 2025</span>
-            </div>
-            <div className="flex justify-between">
-              <span>Receipt:</span>
-              <span className="text-blue-600">View receipt</span>
-            </div>
-          </div>
-        </div>
-
         <div className="space-y-4">
           <p className="text-gray-600 text-sm text-center mb-2">
             Your donation helps us make a real difference. A receipt has been
