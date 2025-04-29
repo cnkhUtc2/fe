@@ -1,0 +1,425 @@
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.title {
+    font-size: 2.5rem;
+    color: #333;
+    text-align: center;
+    margin-bottom: 0.5rem;
+}
+
+.subtitle {
+    font-size: 1.2rem;
+    color: #666;
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.searchAndFilter {
+    margin-bottom: 2rem;
+}
+
+.searchField {
+    margin-bottom: 1rem;
+}
+
+.categories {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+}
+
+.categoryChip {
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.categoryChip:hover {
+    transform: translateY(-2px);
+}
+
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+    padding: 1rem;
+}
+
+.storyCard {
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+    cursor: pointer;
+}
+
+.storyCard:hover {
+    transform: translateY(-5px);
+}
+
+.imageContainer {
+    position: relative;
+    padding-top: 60%;
+    overflow: hidden;
+}
+
+.image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.storyInfo {
+    padding: 1.5rem;
+}
+
+.authorInfo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.authorInfo span {
+    font-weight: 500;
+    color: #333;
+}
+
+.storyInfo h3 {
+    margin: 0 0 0.5rem 0;
+    color: #333;
+    font-size: 1.2rem;
+}
+
+.storyInfo p {
+    margin: 0 0 1rem 0;
+    color: #666;
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+.storyStats {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1rem;
+}
+
+.date {
+    color: #999;
+    font-size: 0.8rem;
+}
+
+.interactions {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modalContent {
+    background: white;
+    max-width: 1000px;
+    width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
+    border-radius: 10px;
+    position: relative;
+}
+
+.modalLayout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+}
+
+.modalImageSection {
+    position: relative;
+    height: 100%;
+}
+
+.modalImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px 0 0 10px;
+}
+
+.modalInfo {
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.modalHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.closeButton {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    font-size: 2rem;
+    color: white;
+    cursor: pointer;
+    z-index: 1;
+}
+
+.modalInfo h2 {
+    margin: 0;
+    color: #333;
+    font-size: 1.8rem;
+}
+
+.modalInfo p {
+    margin: 0;
+    color: #666;
+    line-height: 1.6;
+}
+
+.interactionPanel {
+    margin-top: 2rem;
+    border-top: 1px solid #eee;
+    padding-top: 1.5rem;
+}
+
+.likeSection {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.commentSection {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.commentSection h3 {
+    margin: 0;
+    color: #333;
+    font-size: 1.2rem;
+}
+
+.commentsList {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.comment {
+    display: flex;
+    gap: 1rem;
+    padding: 1rem;
+    background: #f8f9fa;
+    border-radius: 8px;
+}
+
+.commentContent {
+    flex: 1;
+}
+
+.commentHeader {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+}
+
+.commentUser {
+    font-weight: 500;
+    color: #333;
+}
+
+.commentDate {
+    color: #999;
+    font-size: 0.8rem;
+}
+
+.commentForm {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.shareSection {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.shareOptions {
+    display: flex;
+    gap: 0.5rem;
+    background: #f5f5f5;
+    padding: 0.5rem;
+    border-radius: 20px;
+}
+
+.heroSection {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    margin-bottom: 4rem;
+    padding: 2rem;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    border-radius: 20px;
+    overflow: hidden;
+    position: relative;
+}
+
+.heroContent {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 2rem;
+    z-index: 1;
+}
+
+.heroTitle {
+    font-size: 3.5rem;
+    color: #1a237e;
+    margin: 0;
+    line-height: 1.2;
+    font-weight: 700;
+}
+
+.heroSubtitle {
+    font-size: 1.2rem;
+    color: #455a64;
+    line-height: 1.6;
+    margin: 0;
+}
+
+.heroStats {
+    display: flex;
+    gap: 3rem;
+    margin-top: 1rem;
+}
+
+.statItem {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.statNumber {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #1a237e;
+}
+
+.statLabel {
+    font-size: 1rem;
+    color: #455a64;
+    margin-top: 0.5rem;
+}
+
+.heroCategories {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.heroImage {
+    position: relative;
+    height: 100%;
+    min-height: 400px;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.heroImage img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.heroImage:hover img {
+    transform: scale(1.05);
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 1rem;
+    }
+
+    .title {
+        font-size: 2rem;
+    }
+
+    .gallery {
+        grid-template-columns: 1fr;
+    }
+
+    .modalContent {
+        width: 95%;
+    }
+
+    .modalLayout {
+        grid-template-columns: 1fr;
+    }
+
+    .modalImage {
+        border-radius: 10px 10px 0 0;
+    }
+
+    .categories {
+        justify-content: center;
+    }
+
+    .commentForm {
+        flex-direction: column;
+    }
+
+    .heroSection {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        padding: 1.5rem;
+    }
+
+    .heroTitle {
+        font-size: 2.5rem;
+    }
+
+    .heroStats {
+        gap: 2rem;
+    }
+
+    .statNumber {
+        font-size: 2rem;
+    }
+
+    .heroImage {
+        min-height: 300px;
+    }
+}
