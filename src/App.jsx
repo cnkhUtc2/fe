@@ -25,6 +25,7 @@ import Orders from "./Pages/orders/Orders";
 import OrderDetail from "./Pages/orders/OrderDetail";
 import CreateOrder from "./Pages/orders/CreateOrder";
 import AdminDashboard from "./Pages/admin/Dashboard";
+import StoriesInPhoto from "../src/Pages/storiesInPhoto/StoriesInPhoto";
 
 function App() {
   return (
@@ -58,6 +59,7 @@ function App() {
           <Route path="/messenger" element={<Messenger />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/admin" element={<AdminDashboard />} />
+          <Route path="/stories" element={<StoriesInPhoto />} />
         </Routes>
         <Footer />
       </UserProvider>

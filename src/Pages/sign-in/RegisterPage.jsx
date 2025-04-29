@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { signup } from "../../apis/services/AuthService";
 
 const Register = () => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     password: "",
-    role: "667b7b83462a35d0fbe5d251", // Giá trị mặc định của role
+    role: "667b7b83462a35d0fbe5d251",
   });
   const [error, setError] = useState(null);
 
@@ -18,9 +19,8 @@ const Register = () => {
     e.preventDefault();
     setError(null);
     try {
-      const response = await axios.post("https://be-xrlo.onrender.com/api/front/auth/register", formData);
+      const response = await signup(formData);
       console.log("User created:", response.data);
-      // Xóa nội dung form
       setFormData({
         name: "",
         email: "",
@@ -29,7 +29,6 @@ const Register = () => {
       });
       alert("Đăng ký thành công!");
     } catch (err) {
-      // Xóa nội dung form
       setFormData({
         name: "",
         email: "",
@@ -45,10 +44,39 @@ const Register = () => {
       <h2 className="text-xl font-bold mb-4">Register</h2>
       {error && <p className="text-red-500">{error}</p>}
       <form onSubmit={handleSubmit}>
-        <input type="text" name="name" placeholder="Name" value={formData.name} onChange={handleChange} className="w-full p-2 border rounded mb-2" required />
-        <input type="email" name="email" placeholder="Email" value={formData.email} onChange={handleChange} className="w-full p-2 border rounded mb-2" required />
-        <input type="password" name="password" placeholder="Password" value={formData.password} onChange={handleChange} className="w-full p-2 border rounded mb-2" required />
-        <button type="submit" className="w-full bg-blue-500 text-white p-2 rounded">Register</button>
+        <input
+          type="text"
+          name="name"
+          placeholder="Name"
+          value={formData.name}
+          onChange={handleChange}
+          className="w-full p-2 border rounded mb-2"
+          required
+        />
+        <input
+          type="email"
+          name="email"
+          placeholder="Email"
+          value={formData.email}
+          onChange={handleChange}
+          className="w-full p-2 border rounded mb-2"
+          required
+        />
+        <input
+          type="password"
+          name="password"
+          placeholder="Password"
+          value={formData.password}
+          onChange={handleChange}
+          className="w-full p-2 border rounded mb-2"
+          required
+        />
+        <button
+          type="submit"
+          className="w-full bg-blue-500 text-white p-2 rounded"
+        >
+          Register
+        </button>
       </form>
     </div>
   );
