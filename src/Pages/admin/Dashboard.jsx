@@ -1,141 +1,202 @@
-import React, { useState } from 'react';
+import { useState } from "react";
 import {
-    Box,
-    Drawer,
-    Toolbar,
-    Typography,
-    Divider,
-    IconButton,
-    List,
-    ListItem,
-    ListItemButton,
-    ListItemIcon,
-    ListItemText,
-    Dialog,
-    DialogContent
-} from '@mui/material';
-import { useNavigate } from 'react-router-dom';
-import {
-    Dashboard as DashboardIcon,
-    People as PeopleIcon,
-    Help as HelpIcon,
-    AttachMoney as DonateIcon,
-    Image as MediaIcon,
-    Logout as LogoutIcon,
-    Close as CloseIcon
-} from '@mui/icons-material';
-import HelpRequests from './HelpRequests';
+  Home,
+  BookOpen,
+  FileText,
+  Users,
+  ChevronDown,
+  Layout,
+} from "lucide-react";
+import ManageTicket from "./tickets/MangeTicket";
+import TicketDetail from "./tickets/TicketDetail";
 
-const drawerWidth = 240;
+export default function AdminDashboard() {
+  const [activeMenu, setActiveMenu] = useState(null);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
-const menuItems = [
-    { label: 'Dashboard', icon: <DashboardIcon />, id: 'dashboard' },
-    { label: 'Quản lý yêu cầu hỗ trợ', icon: <HelpIcon />, id: 'help-requests' },
-    { label: 'Quản lý người dùng', icon: <PeopleIcon />, id: 'users' },
-    { label: 'Quản lý donate', icon: <DonateIcon />, id: 'donations' },
-    { label: 'Quản lý media', icon: <MediaIcon />, id: 'media' }
-];
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
 
-export default function AdminDashboard({ open, onClose }) {
-    const [activeItem, setActiveItem] = useState('help-requests');
-    const navigate = useNavigate();
+  const toggleMenu = (menu) => {
+    setActiveMenu(activeMenu === menu ? null : menu);
+  };
 
-    const handleLogout = () => {
-        localStorage.removeItem('token');
-        localStorage.removeItem('user');
-        onClose();
-        navigate('/signin');
-    };
+  const menuItems = [
+    {
+      title: "Dashboard",
+      icon: <Home size={20} />,
+      path: "/dashboard",
+      submenu: false,
+    },
+    {
+      title: "Tickets and relief cases",
+      icon: <BookOpen size={20} />,
+      submenu: true,
+      submenuItems: [
+        { title: "Manage tickets", path: "/manage-support-tickets" },
+        { title: "Ticket detail", path: "/ticket-detail" },
+        { title: "Create relief case", path: "/create-relief-case" },
+        { title: "Manage relief case", path: "/manage-relief-cases" },
+      ],
+    },
+    {
+      title: "Donations",
+      icon: <FileText size={20} />,
+      submenu: true,
+      submenuItems: [
+        { title: "Manage donations", path: "/manage-donations" },
+        { title: "Manage item donation", path: "/manage-donation-item" },
+        { title: "Manage money donation", path: "/manage-donation-money" },
+      ],
+    },
+    {
+      title: "Posts",
+      icon: <FileText size={20} />,
+      submenu: true,
+      submenuItems: [
+        { title: "Create Posts", path: "/create-post" },
+        { title: "Manage Posts", path: "/manage-post" },
+      ],
+    },
+    {
+      title: "Users",
+      icon: <Users size={20} />,
+      submenu: true,
+      submenuItems: [{ title: "Manage users", path: "/manage-users" }],
+    },
+  ];
 
-    const renderContent = () => {
-        switch (activeItem) {
-            case 'help-requests':
-                return <HelpRequests />;
-            case 'dashboard':
-                return <Typography variant="h4">Dashboard Content</Typography>;
-            case 'users':
-                return <Typography variant="h4">Users Content</Typography>;
-            case 'donations':
-                return <Typography variant="h4">Donations Content</Typography>;
-            case 'media':
-                return <Typography variant="h4">Media Content</Typography>;
-            default:
-                return <Typography variant="h4">Select a menu item</Typography>;
-        }
-    };
+  const [activePath, setActivePath] = useState("/dashboard");
 
-    return (
-        <Dialog
-            open={open}
-            onClose={onClose}
-            maxWidth="xl"
-            fullWidth
-            PaperProps={{
-                sx: {
-                    height: '90vh',
-                    maxHeight: '90vh',
-                    margin: '5vh auto',
-                    borderRadius: 2
+  return (
+    <div className="flex h-screen bg-gray-100">
+      {/* Sidebar */}
+      <div
+        className={`${
+          isSidebarOpen ? "w-64" : "w-20"
+        } bg-gray-800 text-white transition-all duration-300 ease-in-out`}
+      >
+        {/* Logo */}
+        <div className="flex items-center justify-between px-4 py-3 bg-gray-900">
+          {isSidebarOpen && (
+            <span className="text-xl font-bold">Admin Panel</span>
+          )}
+          <button
+            onClick={toggleSidebar}
+            className="p-1 rounded-lg hover:bg-gray-700"
+          >
+            <Layout size={20} />
+          </button>
+        </div>
+
+        {/* Menu Items */}
+        <div className="py-4">
+          {menuItems.map((item, index) => (
+            <div key={index}>
+              <div
+                className={`flex items-center px-4 py-3 cursor-pointer hover:bg-gray-700 ${
+                  activePath === item.path ||
+                  (item.submenu &&
+                    item.submenuItems.some(
+                      (subItem) => subItem.path === activePath
+                    ))
+                    ? "bg-gray-700"
+                    : ""
+                }`}
+                onClick={() =>
+                  item.submenu
+                    ? toggleMenu(item.title)
+                    : setActivePath(item.path)
                 }
-            }}
-        >
-            <DialogContent dividers sx={{ p: 0, display: 'flex', height: '100%' }}>
-                <Drawer
-                    variant="permanent"
-                    sx={{
-                        width: drawerWidth,
-                        flexShrink: 0,
-                        '& .MuiDrawer-paper': {
-                            width: drawerWidth,
-                            boxSizing: 'border-box',
-                            position: 'relative',
-                            height: '100%'
-                        },
-                    }}
-                >
-                    <Toolbar sx={{ justifyContent: 'space-between' }}>
-                        <Typography variant="h6" noWrap>
-                            Admin Panel
-                        </Typography>
-                        <IconButton
-                            edge="end"
-                            onClick={onClose}
-                            sx={{ display: { xs: 'block', sm: 'none' } }}
-                        >
-                            <CloseIcon />
-                        </IconButton>
-                    </Toolbar>
-                    <Divider />
+              >
+                <span className="mr-3">{item.icon}</span>
+                {isSidebarOpen && (
+                  <>
+                    <span className="flex-1">{item.title}</span>
+                    {item.submenu && (
+                      <ChevronDown
+                        size={16}
+                        className={`transform transition-transform ${
+                          activeMenu === item.title ? "rotate-180" : ""
+                        }`}
+                      />
+                    )}
+                  </>
+                )}
+              </div>
 
-                    <List>
-                        {menuItems.map(({ label, icon, id }) => (
-                            <ListItem key={id} disablePadding>
-                                <ListItemButton
-                                    selected={activeItem === id}
-                                    onClick={() => setActiveItem(id)}
-                                >
-                                    <ListItemIcon>{icon}</ListItemIcon>
-                                    <ListItemText primary={label} />
-                                </ListItemButton>
-                            </ListItem>
-                        ))}
-                    </List>
-                    <Divider />
-                    <List>
-                        <ListItem disablePadding>
-                            <ListItemButton onClick={handleLogout}>
-                                <ListItemIcon>
-                                    <LogoutIcon />
-                                </ListItemIcon>
-                                <ListItemText primary="Đăng xuất" />
-                            </ListItemButton>
-                        </ListItem>
-                    </List>
-                </Drawer>
-                <Box sx={{ flexGrow: 1, p: 3, overflow: 'auto' }}>
-                    {renderContent()}
-                </Box>
-            </DialogContent>
-        </Dialog>
-    );
+              {/* Submenu */}
+              {item.submenu && activeMenu === item.title && isSidebarOpen && (
+                <div className="bg-gray-700 pl-12 py-1">
+                  {item.submenuItems.map((subItem, subIndex) => (
+                    <div
+                      key={subIndex}
+                      className={`py-2 px-2 cursor-pointer hover:bg-gray-600 ${
+                        activePath === subItem.path ? "text-blue-400" : ""
+                      }`}
+                      onClick={() => setActivePath(subItem.path)}
+                    >
+                      {subItem.title}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Main Content */}
+      <div className="flex-1 overflow-auto">
+        {/* Header */}
+        <header className="bg-white shadow-md py-4 px-6">
+          <div className="flex items-center justify-between">
+            <h1 className="text-2xl font-semibold text-gray-800">
+              Admin Dashboard
+            </h1>
+            <div className="flex items-center space-x-4">
+              <div className="relative">
+                <span className="text-gray-800">Admin User</span>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        {/* Page Content */}
+        <main className="p-6">
+          <div className="bg-white rounded-lg shadow-md p-6">
+            {/* Dashboard Content */}
+            {activePath === "/dashboard" && (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div className="bg-blue-500 text-white p-4 rounded-lg shadow-md">
+                  <h3 className="text-lg font-semibold">Something</h3>
+                  <p className="text-3xl font-bold mt-2">24</p>
+                </div>
+                <div className="bg-green-500 text-white p-4 rounded-lg shadow-md">
+                  <h3 className="text-lg font-semibold">Something</h3>
+                  <p className="text-3xl font-bold mt-2">156</p>
+                </div>
+                <div className="bg-purple-500 text-white p-4 rounded-lg shadow-md">
+                  <h3 className="text-lg font-semibold">Something</h3>
+                  <p className="text-3xl font-bold mt-2">1,204</p>
+                </div>
+                <div className="bg-yellow-500 text-white p-4 rounded-lg shadow-md">
+                  <h3 className="text-lg font-semibold">Something</h3>
+                  <p className="text-3xl font-bold mt-2">3,542</p>
+                </div>
+              </div>
+            )}
+
+            {/* Page-specific content */}
+            {activePath !== "/dashboard" && (
+              <div className="bg-gray-100 p-4 rounded-lg">
+                {activePath === "/manage-support-tickets" && <ManageTicket />}
+              </div>
+            )}
+          </div>
+        </main>
+      </div>
+    </div>
+  );
 }

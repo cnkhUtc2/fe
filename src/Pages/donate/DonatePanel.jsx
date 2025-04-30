@@ -1,14 +1,13 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 import { checkout } from "../../apis/services/PaymentService";
 import { Link } from "react-router-dom";
 
 export default function DonatePanel() {
   const [amount, setAmount] = useState("");
-  const [currency, setCurrency] = useState("usd");
+  const [currency, setCurrency] = useState("USD");
   const [loading, setLoading] = useState(false);
 
-  const exchangeRate = 24000;
+  const exchangeRate = 26000;
 
   const handleAmountChange = (e) => {
     const value = e.target.value.replace(/[^0-9.]/g, "");
@@ -16,11 +15,13 @@ export default function DonatePanel() {
   };
 
   const handleCurrencyChange = (e) => {
-    setCurrency(e.target.value);
+    setCurrency(e.target.value.toUpperCase());
   };
 
   const handleCheckout = async () => {
-    if (!amount || isNaN(parseFloat(amount)) || parseFloat(amount) <= 0) {
+    const numericAmount = parseFloat(amount);
+
+    if (!numericAmount || numericAmount <= 0) {
       alert("Please enter a valid amount");
       return;
     }
@@ -28,16 +29,11 @@ export default function DonatePanel() {
     setLoading(true);
 
     try {
-      const amountInUSD =
-        currency === "vnd"
-          ? parseFloat((parseFloat(amount) / exchangeRate).toFixed(2))
-          : parseFloat(parseFloat(amount).toFixed(2));
+      const numericAmount = parseFloat(amount);
 
-      const res = await checkout({
-        amount: amountInUSD,
-      });
+      const res = await checkout(numericAmount, currency);
 
-      if (res.data.url) {
+      if (res.data?.url) {
         window.location.href = res.data.url;
       } else {
         throw new Error("No checkout URL returned");
@@ -50,19 +46,17 @@ export default function DonatePanel() {
     }
   };
 
-  // Format displayed amount based on currency
   const getDisplayAmount = () => {
-    if (!amount) return "";
+    const numericAmount = parseFloat(amount);
+    if (!numericAmount) return "";
 
-    const numAmount = parseFloat(amount);
-    if (isNaN(numAmount)) return "";
-
-    if (currency === "usd") {
-      return `$${numAmount.toFixed(2)}`;
+    if (currency === "USD") {
+      return `$${numericAmount.toFixed(2)}`;
     } else {
-      return `₫${numAmount.toLocaleString()} (≈ $${(
-        numAmount / exchangeRate
-      ).toFixed(2)})`;
+      const amountInUSD = numericAmount / exchangeRate;
+      return `₫${numericAmount.toLocaleString()} (≈ $${amountInUSD.toFixed(
+        2
+      )})`;
     }
   };
 
@@ -77,45 +71,38 @@ export default function DonatePanel() {
             Donate Money
           </h2>
 
+          {/* Currency Selector */}
           <div className="mb-6">
             <label className="block text-gray-700 mb-2">Select Currency</label>
             <div className="flex gap-4">
-              <label className="flex items-center">
-                <input
-                  type="radio"
-                  name="currency"
-                  value="usd"
-                  checked={currency === "usd"}
-                  onChange={handleCurrencyChange}
-                  className="mr-2"
-                />
-                USD ($)
-              </label>
-              <label className="flex items-center">
-                <input
-                  type="radio"
-                  name="currency"
-                  value="vnd"
-                  checked={currency === "vnd"}
-                  onChange={handleCurrencyChange}
-                  className="mr-2"
-                />
-                VND (₫)
-              </label>
+              {["USD", "VND"].map((curr) => (
+                <label key={curr} className="flex items-center">
+                  <input
+                    type="radio"
+                    name="currency"
+                    value={curr}
+                    checked={currency === curr}
+                    onChange={handleCurrencyChange}
+                    className="mr-2"
+                  />
+                  {curr} {curr === "USD" ? "($)" : "(₫)"}
+                </label>
+              ))}
             </div>
           </div>
 
+          {/* Amount Input */}
           <div className="mb-6">
             <label className="block text-gray-700 mb-2">Donation Amount</label>
             <div className="relative">
               <span className="absolute left-3 top-3">
-                {currency === "usd" ? "$" : "₫"}
+                {currency === "USD" ? "$" : "₫"}
               </span>
               <input
                 type="text"
                 value={amount}
                 onChange={handleAmountChange}
-                placeholder={currency === "usd" ? "50.00" : "1,000,000"}
+                placeholder={currency === "USD" ? "50.00" : "1,000,000"}
                 className="w-full p-3 pl-7 border rounded-md"
               />
             </div>
@@ -126,23 +113,19 @@ export default function DonatePanel() {
             )}
           </div>
 
+          {/* Donate Button */}
           <div className="mb-6">
             <button
               onClick={handleCheckout}
-              disabled={
-                loading ||
-                !amount ||
-                isNaN(parseFloat(amount)) ||
-                parseFloat(amount) <= 0
-              }
+              disabled={loading || !amount || parseFloat(amount) <= 0}
               className="w-full bg-blue-600 text-white py-3 rounded-md hover:bg-blue-700 disabled:bg-blue-300 disabled:cursor-not-allowed transition-colors"
             >
-              {loading ? "Processing..." : `Donate Now`}
+              {loading ? "Processing..." : "Donate Now"}
             </button>
           </div>
 
           <p className="text-sm text-gray-500 text-center">
-            Payments processed securely via Stripe
+            Payments processed securely
           </p>
         </div>
 

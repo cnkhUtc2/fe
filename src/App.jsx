@@ -25,6 +25,8 @@ import Orders from "./Pages/orders/Orders";
 import OrderDetail from "./Pages/orders/OrderDetail";
 import CreateOrder from "./Pages/orders/CreateOrder";
 import AdminDashboard from "./Pages/admin/Dashboard";
+import StoriesInPhoto from "../src/Pages/storiesInPhoto/StoriesInPhoto";
+import TicketDetail from "./Pages/admin/tickets/TicketDetail";
 
 function App() {
   return (
@@ -47,6 +49,7 @@ function App() {
             path="/orders/create/:donationItemId"
             element={<CreateOrder />}
           />
+          <Route path="/tickets/:id" element={<TicketDetail />} />
           <Route path="/give-blood" element={<GiveBlood />} />
           <Route path="/training" element={<Training />} />
           <Route path="/volunteer" element={<Volunteer />} />
@@ -58,6 +61,7 @@ function App() {
           <Route path="/messenger" element={<Messenger />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/admin" element={<AdminDashboard />} />
+          <Route path="/stories" element={<StoriesInPhoto />} />
         </Routes>
         <Footer />
       </UserProvider>

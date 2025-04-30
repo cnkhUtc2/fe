@@ -1,32 +1,64 @@
 /* Slider.module.css */
-.sliderContent {
-    max-width: 100%;
+.slider {
+    position: relative;
     width: 100%;
-    /* Set max width */
+    max-width: 1200px;
     margin: 0 auto;
-    /* Center it */
+    padding: 20px 0;
+}
+
+.sliderContent {
+    width: 100%;
+    height: 400px;
     overflow: hidden;
-    /* Prevent overflow */
+    position: relative;
+    border-radius: 10px;
+}
+
+.sliderTrack {
     display: flex;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.5s ease-in-out;
 }
 
 .slide {
     flex: 0 0 100%;
-    /* Each slide takes full width */
-    transition: transform 0.5s ease-in-out;
+    min-width: 100%;
+    height: 100%;
 }
 
 .slide img {
     width: 100%;
-    height: auto;
-    border-radius: 10px;
-    /* Optional: Add rounded corners */
+    height: 100%;
+    object-fit: cover;
 }
 
-.active {
-    opacity: 1;
+.sliderButton {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.8);
+    border: none;
+    cursor: pointer;
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
 }
 
-.inactive {
-    opacity: 0;
+.sliderButton:first-child {
+    left: 10px;
+}
+
+.sliderButton:last-child {
+    right: 10px;
+}
+
+.sliderButton:hover {
+    background-color: rgba(255, 255, 255, 0.9);
 }
