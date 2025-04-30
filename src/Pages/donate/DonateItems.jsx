@@ -1,29 +1,69 @@
-import React, { useState } from "react";
-import { createDonationItem } from "../../apis/services/DonationItemsService";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import apiClient from "../../apis/AxiosConfiguration";
 
 export default function DonateItems() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const [categories, setCategories] = useState([]);
   const [formData, setFormData] = useState({
-    title: "",
     message: "",
     type: "CASE",
+    status: "open",
     donorName: "",
     items: [
       {
         name: "",
-        code: "",
         quantity: 1,
         price: 0,
         length: 10,
         width: 10,
         height: 10,
         weight: 10,
-        categories: [],
+        categories: "668a10000000000000000006",
       },
     ],
   });
+
+  useEffect(() => {
+    // Fetch categories from admin endpoint
+    const fetchCategories = async () => {
+      try {
+        const response = await apiClient.get(
+          "/front/categories?limit=10&page=1&sortBy=createdAt&sortDirection=-1&searchType=and&isAll=true&locale=en"
+        );
+
+        console.log("Categories response:", response.data);
+
+        // Access the nested items array based on the API response structure
+        if (
+          response.data &&
+          response.data.data &&
+          Array.isArray(response.data.data.items)
+        ) {
+          setCategories(response.data.data.items);
+        } else {
+          console.error("Unexpected categories data format:", response.data);
+          // Fallback categories based on your screenshot
+          setCategories([
+            { _id: "668a10000000000000000007", name: "Children & Education" },
+            { _id: "668a10000000000000000006", name: "Temporary Shelter" },
+            // Add more fallback categories as needed
+          ]);
+        }
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+        // Fallback categories based on your screenshot
+        setCategories([
+          { _id: "668a10000000000000000007", name: "Children & Education" },
+          { _id: "668a10000000000000000006", name: "Temporary Shelter" },
+          // Add more fallback categories as needed
+        ]);
+      }
+    };
+
+    fetchCategories();
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -57,20 +97,23 @@ export default function DonateItems() {
   };
 
   const addItem = () => {
+    // Use the first category ID from the fetched categories if available
+    const defaultCategory =
+      categories.length > 0 ? categories[0]._id : "668a10000000000000000006";
+
     setFormData({
       ...formData,
       items: [
         ...formData.items,
         {
           name: "",
-          code: "",
           quantity: 1,
           price: 0,
           length: 10,
           width: 10,
           height: 10,
           weight: 10,
-          categories: [],
+          categories: defaultCategory,
         },
       ],
     });
@@ -90,33 +133,25 @@ export default function DonateItems() {
     setLoading(true);
 
     try {
-      // Set default category if not provided
-      const itemsWithCategories = formData.items.map((item) => {
-        if (!item.categories || item.categories.length === 0) {
-          return {
-            ...item,
-            categories: ["60f3b3b3b3b3b3b3b3b3b3"], // Default category ID
-          };
-        }
-        return item;
-      });
+      const response = await apiClient.post(
+        "/front/donation-items/create",
+        formData
+      );
 
-      const data = {
-        ...formData,
-        items: itemsWithCategories,
-      };
-
-      const response = await createDonationItem(data);
-
-      if (response && response._id) {
+      if (response && response.data && response.data._id) {
         alert("Thank you for your donation!");
-        navigate(`/donate/success?id=${response._id}`);
+        navigate(`/donate/success?id=${response.data._id}`);
       } else {
         throw new Error("Failed to create donation");
       }
     } catch (error) {
       console.error("Donation error:", error);
-      alert("There was an error processing your donation. Please try again.");
+      const errorMessage = error.response
+        ? `Server responded with status ${error.response.status}: ${
+            error.response.data?.message || "Unknown error"
+          }`
+        : error.message;
+      alert(`There was an error processing your donation: ${errorMessage}`);
     } finally {
       setLoading(false);
     }
@@ -127,18 +162,6 @@ export default function DonateItems() {
       <h1 className="text-2xl font-bold mb-6 text-center">Donate Items</h1>
 
       <form onSubmit={handleSubmit}>
-        <div className="mb-6">
-          <label className="block text-gray-700 mb-2">Donation Title</label>
-          <input
-            type="text"
-            name="title"
-            value={formData.title}
-            onChange={handleChange}
-            placeholder="Title of your donation"
-            className="w-full p-3 border rounded-md"
-          />
-        </div>
-
         <div className="mb-6">
           <label className="block text-gray-700 mb-2">Message</label>
           <textarea
@@ -197,16 +220,26 @@ export default function DonateItems() {
                 </div>
 
                 <div>
-                  <label className="block text-gray-700 mb-1">Item Code</label>
-                  <input
-                    type="text"
-                    name="code"
-                    value={item.code}
+                  <label className="block text-gray-700 mb-1">Category</label>
+                  <select
+                    name="categories"
+                    value={item.categories}
                     onChange={(e) => handleItemChange(index, e)}
-                    placeholder="Item code/SKU"
                     className="w-full p-2 border rounded-md"
                     required
-                  />
+                  >
+                    {categories.length > 0 ? (
+                      categories.map((category) => (
+                        <option key={category._id} value={category._id}>
+                          {category.name}
+                        </option>
+                      ))
+                    ) : (
+                      <option value="60f3b3b3b3b3b3b3b3b3b3">
+                        Default Category
+                      </option>
+                    )}
+                  </select>
                 </div>
 
                 <div>
@@ -222,51 +255,39 @@ export default function DonateItems() {
                   />
                 </div>
 
-                <div>
-                  <label className="block text-gray-700 mb-1">
-                    Estimated Value ($)
-                  </label>
-                  <input
-                    type="number"
-                    name="price"
-                    value={item.price}
-                    onChange={(e) => handleItemChange(index, e)}
-                    min="0"
-                    step="0.01"
-                    className="w-full p-2 border rounded-md"
-                    required
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-gray-700 mb-1">
-                    Dimensions (cm)
-                  </label>
-                  <div className="flex gap-2">
+                <div className="grid grid-cols-3 gap-2">
+                  <div>
+                    <label className="block text-gray-700 mb-1">Length</label>
                     <input
                       type="number"
                       name="length"
                       value={item.length}
                       onChange={(e) => handleItemChange(index, e)}
-                      placeholder="L"
+                      min="0"
                       className="w-full p-2 border rounded-md"
                       required
                     />
+                  </div>
+                  <div>
+                    <label className="block text-gray-700 mb-1">Width</label>
                     <input
                       type="number"
                       name="width"
                       value={item.width}
                       onChange={(e) => handleItemChange(index, e)}
-                      placeholder="W"
+                      min="0"
                       className="w-full p-2 border rounded-md"
                       required
                     />
+                  </div>
+                  <div>
+                    <label className="block text-gray-700 mb-1">Height</label>
                     <input
                       type="number"
                       name="height"
                       value={item.height}
                       onChange={(e) => handleItemChange(index, e)}
-                      placeholder="H"
+                      min="0"
                       className="w-full p-2 border rounded-md"
                       required
                     />
@@ -283,7 +304,6 @@ export default function DonateItems() {
                     value={item.weight}
                     onChange={(e) => handleItemChange(index, e)}
                     min="0"
-                    step="0.01"
                     className="w-full p-2 border rounded-md"
                     required
                   />
@@ -313,7 +333,7 @@ export default function DonateItems() {
       </form>
 
       <p className="text-sm text-gray-500 text-center">
-        Thank you for your generous donation. We'll contact you shortly to
+        Thank you for your generous donation. We&apos;ll contact you shortly to
         arrange pickup of your items.
       </p>
     </div>
