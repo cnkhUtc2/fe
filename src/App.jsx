@@ -27,6 +27,11 @@ import CreateOrder from "./Pages/orders/CreateOrder";
 import AdminDashboard from "./Pages/admin/Dashboard";
 import StoriesInPhoto from "../src/Pages/storiesInPhoto/StoriesInPhoto";
 import TicketDetail from "./Pages/admin/tickets/TicketDetail";
+import CreateReliefCase from "./Pages/admin/relief-cases/CreateReliefCase";
+import ReliefCaseDetail from "./Pages/admin/relief-cases/ReliefCaseDetail";
+import CreatePost from "./Pages/posts/CreatePost";
+import PostDetail from "./Pages/posts/PostDetail";
+import FloodAidFeed from "./Pages/Post";
 
 function App() {
   return (
@@ -42,26 +47,41 @@ function App() {
           <Route path="/donate/success" element={<DonateItemsSuccess />} />
           <Route path="/payment-success" element={<PaySuccess />} />
           <Route path="/payment-fail" element={<PayFail />} />
+          <Route path="/create-post" element={<CreatePost />} />
           <Route path="/orders" element={<Orders />} />
           <Route path="/orders/:id" element={<OrderDetail />} />
           <Route path="/orders/create" element={<CreateOrder />} />
-          <Route
-            path="/orders/create/:donationItemId"
-            element={<CreateOrder />}
-          />
-          <Route path="/tickets/:id" element={<TicketDetail />} />
-          <Route path="/give-blood" element={<GiveBlood />} />
+
           <Route path="/training" element={<Training />} />
           <Route path="/volunteer" element={<Volunteer />} />
           <Route path="/about" element={<About />} />
           <Route path="/help" element={<GetHelp />} />
-          <Route path="/post" element={<Post />} />
+          <Route path="/post" element={<FloodAidFeed />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/account" element={<Account />} />
           <Route path="/messenger" element={<Messenger />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/admin" element={<AdminDashboard />} />
           <Route path="/stories" element={<StoriesInPhoto />} />
+          <Route path="/tickets/:id" element={<TicketDetail />} />
+          <Route path="/post/:id" element={<PostDetail />} />
+          <Route
+            path="/create-relief-case/:id"
+            element={<CreateReliefCase />}
+          />
+          <Route
+            path="/orders/create/:donationItemId"
+            element={<CreateOrder />}
+          />
+          <Route
+            path="/orders/create/:donationItemId"
+            element={<CreateOrder />}
+          />
+
+          <Route
+            path="/update/relief-case/:id"
+            element={<ReliefCaseDetail />}
+          />
         </Routes>
         <Footer />
       </UserProvider>

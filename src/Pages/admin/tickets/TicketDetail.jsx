@@ -15,6 +15,7 @@ import {
   CheckCircle,
   XCircle,
   Clock,
+  Package,
 } from "lucide-react";
 import { StatusBadge } from "./StatusBadge";
 
@@ -82,11 +83,14 @@ export default function TicketDetail() {
     } finally {
       setUpdating(false);
 
-      // Clear message after 3 seconds
       setTimeout(() => {
         setUpdateMessage({ type: "", text: "" });
       }, 3000);
     }
+  };
+
+  const handleCreateReliefCase = () => {
+    navigate(`/create-relief-case/${id}`);
   };
 
   if (loading) {
@@ -164,9 +168,22 @@ export default function TicketDetail() {
 
           {/* Status Update Section */}
           <div className="p-6 border-b border-gray-200 bg-white">
-            <h2 className="text-lg font-medium text-gray-900 mb-4">
-              Update Status
-            </h2>
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-lg font-medium text-gray-900">
+                Update Status
+              </h2>
+
+              {/* Create Relief Case Button - Only show for ACCEPTED tickets */}
+              {ticket.status === "ACCEPTED" && (
+                <button
+                  onClick={handleCreateReliefCase}
+                  className="flex items-center px-4 py-2 bg-purple-100 text-purple-700 hover:bg-purple-200 rounded-md font-medium"
+                >
+                  <Package size={16} className="mr-2" />
+                  Create Relief Case
+                </button>
+              )}
+            </div>
 
             {/* Status update message */}
             {updateMessage.text && (

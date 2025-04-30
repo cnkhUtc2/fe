@@ -6,8 +6,10 @@ import {
   Filter,
   MoreHorizontal,
   AlertCircle,
+  CheckCircle,
+  XCircle,
 } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { getAllTickets } from "../../../apis/services/TicketService";
 import { StatusBadge } from "./StatusBadge";
 
@@ -66,6 +68,29 @@ export default function ManageTicket() {
       </div>
     );
   }
+
+  const handleViewTicket = (ticketId) => {
+    // Navigate programmatically
+    navigate(`/tickets/${ticketId}`);
+  };
+
+  // Render the relief case status indicator
+  const renderReliefCaseStatus = (isCreatedReliefCase) => {
+    if (isCreatedReliefCase) {
+      return (
+        <div className="flex items-center">
+          <CheckCircle size={16} className="text-green-500 mr-1" />
+          <span className="text-green-700">Created</span>
+        </div>
+      );
+    }
+    return (
+      <div className="flex items-center">
+        <XCircle size={16} className="text-gray-400 mr-1" />
+        <span className="text-gray-500">Not Created</span>
+      </div>
+    );
+  };
 
   return (
     <div className="bg-gray-50 min-h-screen">
@@ -130,6 +155,12 @@ export default function ManageTicket() {
                     scope="col"
                     className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase"
                   >
+                    Relief Case
+                  </th>
+                  <th
+                    scope="col"
+                    className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase"
+                  >
                     Created At
                   </th>
                   <th
@@ -162,17 +193,20 @@ export default function ManageTicket() {
                       <td className="px-6 py-4 whitespace-nowrap">
                         <StatusBadge status={ticket.status} />
                       </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        {renderReliefCaseStatus(ticket.isCreatedReliefCase)}
+                      </td>
                       <td className="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
                         {new Date(ticket.createdAt).toLocaleDateString()}
                       </td>
                       <td className="px-6 py-4 text-sm font-medium whitespace-nowrap">
                         <div className="flex space-x-2">
-                          <button
+                          <Link
+                            to={`/tickets/${ticket._id}`}
                             className="text-blue-600 hover:text-blue-900"
-                            onClick={() => navigate(`/tickets/${ticket._id}`)}
                           >
                             View
-                          </button>
+                          </Link>
                           <button className="text-gray-600 hover:text-gray-900">
                             <MoreHorizontal size={16} />
                           </button>

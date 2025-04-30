@@ -8,7 +8,10 @@ import {
   Layout,
 } from "lucide-react";
 import ManageTicket from "./tickets/MangeTicket";
-import TicketDetail from "./tickets/TicketDetail";
+import ManageReliefCase from "./relief-cases/ManageReliefCase";
+import ManageUsers from "./user/ManageUser";
+import CreatePostAdmin from "./posts/CreatePostAdmin";
+import ManagePost from "./posts/ManagePost";
 
 export default function AdminDashboard() {
   const [activeMenu, setActiveMenu] = useState(null);
@@ -35,8 +38,6 @@ export default function AdminDashboard() {
       submenu: true,
       submenuItems: [
         { title: "Manage tickets", path: "/manage-support-tickets" },
-        { title: "Ticket detail", path: "/ticket-detail" },
-        { title: "Create relief case", path: "/create-relief-case" },
         { title: "Manage relief case", path: "/manage-relief-cases" },
       ],
     },
@@ -192,6 +193,10 @@ export default function AdminDashboard() {
             {activePath !== "/dashboard" && (
               <div className="bg-gray-100 p-4 rounded-lg">
                 {activePath === "/manage-support-tickets" && <ManageTicket />}
+                {activePath === "/manage-relief-cases" && <ManageReliefCase />}
+                {activePath === "/manage-users" && <ManageUsers />}
+                {activePath === "/create-post" && <CreatePostAdmin />}
+                {activePath === "/manage-post" && <ManagePost />}
               </div>
             )}
           </div>

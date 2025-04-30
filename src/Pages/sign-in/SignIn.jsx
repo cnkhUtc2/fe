@@ -19,8 +19,8 @@ const LoginPage = () => {
     try {
       const response = await signin({ email, password });
       localStorage.setItem("token", response.data?.accessToken);
-      window.dispatchEvent(new Event("userLoggedIn"));
       navigate("/");
+      window.location.reload();
     } catch (err) {
       setError(err.message);
       console.error("Sign in fail", err);
