@@ -1,6 +1,8 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function PaySuccess() {
+  const navigate = useNavigate();
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50 p-4">
       <div className="max-w-md w-full bg-white rounded-lg shadow-md p-8">
@@ -35,10 +37,17 @@ export default function PaySuccess() {
             Your donation helps us make a real difference. A receipt has been
             sent to your email.
           </p>
-          <button className="w-full bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded-md font-medium transition-colors">
+
+          <button
+            className="w-full bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded-md font-medium transition-colors"
+            onClick={() => navigate("/")}
+          >
             Return to Homepage
           </button>
-          <button className="w-full bg-white hover:bg-gray-100 text-gray-700 border border-gray-300 py-2 px-4 rounded-md font-medium transition-colors">
+          <button
+            className="w-full bg-white hover:bg-gray-100 text-gray-700 border border-gray-300 py-2 px-4 rounded-md font-medium transition-colors"
+            onClick={() => navigate("/donate")}
+          >
             Make Another Donation
           </button>
         </div>

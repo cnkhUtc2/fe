@@ -9,11 +9,11 @@ export const StatusBadge = ({ status }) => {
       badgeClass = "bg-blue-100 text-blue-800";
       icon = <Clock size={16} className="mr-1" />;
       break;
-    case "CLOSED":
+    case "DECLINED":
       badgeClass = "bg-green-100 text-green-800";
       icon = <CheckCircle size={16} className="mr-1" />;
       break;
-    case "PENDING":
+    case "ACCEPTED":
       badgeClass = "bg-yellow-100 text-yellow-800";
       icon = <AlertCircle size={16} className="mr-1" />;
       break;

@@ -14,7 +14,7 @@ export default function Sentiment() {
 
     try {
       const res = await fetch(
-        "https://sentiment-analysis-2kya.onrender.com/predict",
+        "https://sentiment-analysis-ogoq.onrender.com/predict",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },

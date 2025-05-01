@@ -16,12 +16,13 @@ import styles from "/src/styles/Navbar.module.css";
 import SearchAppBar from "./searchBar";
 import logoFinal from "../../assets/logo.png";
 import { useNavigate } from "react-router-dom";
-import AdminDashboard from "../../Pages/admin/Dashboard";
+import AdminDashboard from "../../Pages/admin/dashboard/Dashboard";
 import UserContext from "../../../UserContext";
 
 const pages = [
   { name: "Donate", path: "/donate" },
   { name: "Get Help", path: "/help" },
+  { name: "Flood Forecast", path: "/predict-flood" },
   { name: "Community", path: "/post" },
   { name: "Stories in Photos", path: "/stories" },
   { name: "About Us", path: "/about" },
@@ -45,11 +46,9 @@ function ResponsiveAppBar() {
   }, [user]);
 
   const settings = [
-    { name: "Profile", path: "/profile" },
-    { name: "Account", path: "/account" },
-    ...(isAdmin
-      ? [{ name: "Dashboard", action: () => setShowAdminModal(true) }]
-      : []),
+    ...(!isAdmin ? [{ name: "Account", path: "/account" }] : []),
+
+    ...(isAdmin ? [{ name: "Dashboard", path: "/admin" }] : []),
     { name: "Logout", action: () => handleLogout() },
   ];
 
@@ -85,6 +84,13 @@ function ResponsiveAppBar() {
     } else {
       navigate(setting.path);
     }
+    handleCloseUserMenu();
+  };
+
+  // Simple navigation function to avoid repetition
+  const navigateTo = (path) => {
+    navigate(path);
+    handleCloseNavMenu();
   };
 
   return (
@@ -93,13 +99,12 @@ function ResponsiveAppBar() {
         <Container maxWidth="xl">
           <Toolbar disableGutters>
             <div
-              onClick={() => {
-                navigate("/"), window.location.reload();
-              }}
+              onClick={() => navigateTo("/")}
               style={{
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
+                cursor: "pointer",
               }}
             >
               <img
@@ -109,9 +114,7 @@ function ResponsiveAppBar() {
               />
             </div>
             <Typography
-              onClick={() => {
-                navigate("/"), window.location.reload();
-              }}
+              onClick={() => navigateTo("/")}
               variant="h6"
               noWrap
               component="a"
@@ -123,6 +126,7 @@ function ResponsiveAppBar() {
                 letterSpacing: ".3rem",
                 color: "inherit",
                 textDecoration: "none",
+                cursor: "pointer",
               }}
             >
               AidBridge
@@ -166,7 +170,10 @@ function ResponsiveAppBar() {
                 }}
               >
                 {pages.map((page) => (
-                  <MenuItem key={page.name} onClick={() => navigate(page.path)}>
+                  <MenuItem
+                    key={page.name}
+                    onClick={() => navigateTo(page.path)}
+                  >
                     <Typography sx={{ textAlign: "center" }}>
                       {page.name}
                     </Typography>
@@ -179,7 +186,7 @@ function ResponsiveAppBar() {
               variant="h5"
               noWrap
               component="a"
-              href="#app-bar-with-responsive-menu"
+              onClick={() => navigateTo("/")}
               sx={{
                 mr: 2,
                 display: { xs: "flex", md: "none" },
@@ -189,9 +196,10 @@ function ResponsiveAppBar() {
                 letterSpacing: ".3rem",
                 color: "inherit",
                 textDecoration: "none",
+                cursor: "pointer",
               }}
             >
-              LOGO
+              AidBridge
             </Typography>
             <Box
               sx={{
@@ -205,7 +213,7 @@ function ResponsiveAppBar() {
               {pages.map((page) => (
                 <Button
                   key={page.name}
-                  onClick={() => navigate(page.path)}
+                  onClick={() => navigateTo(page.path)}
                   sx={{
                     color: "white",
                     display: "block",
@@ -237,7 +245,7 @@ function ResponsiveAppBar() {
                 </Box>
               ) : (
                 <Button variant="contained" onClick={handleLoginClick}>
-                  Đăng nhập
+                  Sign In
                 </Button>
               )}
 
@@ -260,10 +268,7 @@ function ResponsiveAppBar() {
                 {settings.map((setting) => (
                   <MenuItem
                     key={setting.name}
-                    onClick={() => {
-                      handleCloseUserMenu();
-                      handleMenuClick(setting);
-                    }}
+                    onClick={() => handleMenuClick(setting)}
                   >
                     <Typography sx={{ textAlign: "center" }}>
                       {setting.name}

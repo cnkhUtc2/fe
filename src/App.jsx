@@ -2,20 +2,18 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import ResponsiveAppBar from "./components/Header/navBar";
 import Home from "./Pages/Home";
-import GiveBlood from "./Pages/GiveBlood";
 import Training from "./Pages/Training";
 import Volunteer from "./Pages/Volunteer";
 import About from "./Pages/About";
 import GetHelp from "./Pages/getHelp/GetHelp";
-import Profile from "./Pages/Profile";
-import Account from "./Pages/Account";
+import Profile from "./Pages/profile/Profile";
+import Account from "./Pages/account/Account";
 import Footer from "./components/Footer/Footer";
 import Blog from "./Pages/Blog";
 import Messenger from "./Pages/messenger/Messenger";
 import Signin from "./Pages/sign-in/SignIn";
 import { UserProvider } from "../UserContext";
 import RegisterPage from "./Pages/sign-in/RegisterPage";
-import Post from "./Pages/community/Community";
 import DonatePanel from "./Pages/donate/DonatePanel";
 import PaySuccess from "./Pages/donate/PaySuccess";
 import PayFail from "./Pages/donate/PayFail";
@@ -24,7 +22,7 @@ import DonateItemsSuccess from "./Pages/donate/DonateItemsSuccess";
 import Orders from "./Pages/orders/Orders";
 import OrderDetail from "./Pages/orders/OrderDetail";
 import CreateOrder from "./Pages/orders/CreateOrder";
-import AdminDashboard from "./Pages/admin/Dashboard";
+import AdminDashboard from "./Pages/admin/dashboard/Dashboard";
 import StoriesInPhoto from "../src/Pages/storiesInPhoto/StoriesInPhoto";
 import TicketDetail from "./Pages/admin/tickets/TicketDetail";
 import CreateReliefCase from "./Pages/admin/relief-cases/CreateReliefCase";
@@ -59,7 +57,6 @@ function App() {
           <Route path="/about" element={<About />} />
           <Route path="/help" element={<GetHelp />} />
           <Route path="/post" element={<FloodAidFeed />} />
-          <Route path="/profile" element={<Profile />} />
           <Route path="/account" element={<Account />} />
           <Route path="/messenger" element={<Messenger />} />
           <Route path="/register" element={<RegisterPage />} />
@@ -69,6 +66,8 @@ function App() {
           <Route path="/test-model" element={<Sentiment />} />
           <Route path="/tickets/:id" element={<TicketDetail />} />
           <Route path="/post/:id" element={<PostDetail />} />
+          <Route path="/profile/:id" element={<Profile />} />
+
           <Route
             path="/create-relief-case/:id"
             element={<CreateReliefCase />}

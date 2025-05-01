@@ -1,18 +1,29 @@
 import { useState } from "react";
 import { Camera } from "lucide-react";
+
+import defaultImage from "../../assets/default.png";
 import { createUserPost } from "../../apis/services/PostService";
+import { getSentimentScore } from "../../apis/services/SentimentAnalysisService";
 
 export default function CreatePost() {
+  const FAST_API_URL = import.meta.env.VITE_SENTIMENT_ANALYSIS_API;
   const [formData, setFormData] = useState({
     name: "",
     shortDescription: "",
     longDescription: "",
     status: "PUBLISHED",
     featuredImage: null,
+    sentimentDto: {
+      positive: 0,
+      negative: 0,
+      neutral: 0,
+      type: "POST",
+    },
   });
 
   const [imagePreview, setImagePreview] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [sentimentLoading, setSentimentLoading] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -39,21 +50,72 @@ export default function CreatePost() {
     }
   };
 
+  const analyzeSentiment = async (text) => {
+    try {
+      if (text.trim().length === 0) {
+        throw new Error("No content to analyze");
+      }
+
+      const data = await getSentimentScore(FAST_API_URL, text);
+
+      return {
+        positive: data.sentiment_scores.Positive,
+        negative: data.sentiment_scores.Negative,
+        neutral:
+          data.sentiment_scores.Neutral + data.sentiment_scores.Irrelevant,
+        type: "POST",
+      };
+    } catch (error) {
+      console.error("Error analyzing sentiment:", error);
+      // Return default values in case of error
+      return {
+        positive: 0.33,
+        negative: 0.33,
+        neutral: 0.34,
+        type: "POST",
+      };
+    }
+  };
+
   const handleSubmit = async () => {
     setIsSubmitting(true);
+    setSentimentLoading(true);
 
     try {
+      // First, analyze sentiment
+      const text =
+        `${formData.name} ${formData.shortDescription} ${formData.longDescription}`.trim();
+      const sentimentResults = await analyzeSentiment(text);
+
+      // Then create the post with the sentiment results
       const formDataToSend = new FormData();
 
-      // Add text fields
       formDataToSend.append("name", formData.name);
       formDataToSend.append("status", formData.status);
       formDataToSend.append("shortDescription", formData.shortDescription);
       formDataToSend.append("longDescription", formData.longDescription);
 
-      // Add file if it exists
+      formDataToSend.append(
+        "sentimentDto[positive]",
+        sentimentResults.positive
+      );
+      formDataToSend.append(
+        "sentimentDto[negative]",
+        sentimentResults.negative
+      );
+      formDataToSend.append("sentimentDto[neutral]", sentimentResults.neutral);
+
+      formDataToSend.append("sentimentDto[type]", "POST");
+
       if (formData.featuredImage) {
         formDataToSend.append("featuredImage", formData.featuredImage);
+      } else {
+        const response = await fetch(defaultImage);
+        const blob = await response.blob();
+        const defaultImageFile = new File([blob], "default.png", {
+          type: "image/png",
+        });
+        formDataToSend.append("featuredImage", defaultImageFile);
       }
 
       await createUserPost(formDataToSend);
@@ -65,7 +127,14 @@ export default function CreatePost() {
         name: "",
         shortDescription: "",
         longDescription: "",
+        status: "PUBLISHED",
         featuredImage: null,
+        sentimentDto: {
+          positive: 0,
+          negative: 0,
+          neutral: 0,
+          type: "POST",
+        },
       });
       setImagePreview(null);
     } catch (error) {
@@ -73,6 +142,7 @@ export default function CreatePost() {
       alert("Failed to create post. Please try again.");
     } finally {
       setIsSubmitting(false);
+      setSentimentLoading(false);
     }
   };
 
@@ -143,6 +213,9 @@ export default function CreatePost() {
           <label className="block text-sm font-medium text-gray-700 mb-2">
             Featured Image
           </label>
+          <p className="text-xs text-gray-500 mb-2">
+            If no image is selected, a default image will be used
+          </p>
 
           <div className="mt-1 flex items-center">
             <div
@@ -212,7 +285,11 @@ export default function CreatePost() {
               ${isSubmitting ? "bg-blue-400" : "bg-blue-600 hover:bg-blue-700"} 
               transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500`}
           >
-            {isSubmitting ? "Creating..." : "Create Post"}
+            {isSubmitting
+              ? sentimentLoading
+                ? "Analyzing sentiment..."
+                : "Creating..."
+              : "Create Post"}
           </button>
         </div>
       </div>
