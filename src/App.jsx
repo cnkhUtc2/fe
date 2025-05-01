@@ -15,7 +15,7 @@ import Messenger from "./Pages/messenger/Messenger";
 import Signin from "./Pages/sign-in/SignIn";
 import { UserProvider } from "../UserContext";
 import RegisterPage from "./Pages/sign-in/RegisterPage";
-import Post from "./Pages/Post";
+import Post from "./Pages/community/Community";
 import DonatePanel from "./Pages/donate/DonatePanel";
 import PaySuccess from "./Pages/donate/PaySuccess";
 import PayFail from "./Pages/donate/PayFail";
@@ -31,7 +31,9 @@ import CreateReliefCase from "./Pages/admin/relief-cases/CreateReliefCase";
 import ReliefCaseDetail from "./Pages/admin/relief-cases/ReliefCaseDetail";
 import CreatePost from "./Pages/posts/CreatePost";
 import PostDetail from "./Pages/posts/PostDetail";
-import FloodAidFeed from "./Pages/Post";
+import FloodAidFeed from "./Pages/community/Community";
+import Sentiment from "./Pages/model-test/Sentiment";
+import PredictFlood from "./Pages/predict-flood/PredictFlood";
 
 function App() {
   return (
@@ -61,8 +63,10 @@ function App() {
           <Route path="/account" element={<Account />} />
           <Route path="/messenger" element={<Messenger />} />
           <Route path="/register" element={<RegisterPage />} />
+          <Route path="/predict-flood" element={<PredictFlood />} />
           <Route path="/admin" element={<AdminDashboard />} />
           <Route path="/stories" element={<StoriesInPhoto />} />
+          <Route path="/test-model" element={<Sentiment />} />
           <Route path="/tickets/:id" element={<TicketDetail />} />
           <Route path="/post/:id" element={<PostDetail />} />
           <Route

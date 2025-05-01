@@ -35,7 +35,8 @@ export const createAdminPost = async (data) => {
 
 export const getAllPosts = async (params) => {
   try {
-    const res = await apiClient.get(`/admin/posts/blogs`, { params });
+    const res = await apiClient.get(`/front/posts/blogs`, { params });
+
     return res.data;
   } catch (error) {
     handleApiError(error);

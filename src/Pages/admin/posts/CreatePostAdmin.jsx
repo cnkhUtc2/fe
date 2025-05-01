@@ -2,6 +2,9 @@ import { useState } from "react";
 import { Camera } from "lucide-react";
 import { createAdminPost } from "../../../apis/services/PostService";
 
+// Import default image
+import defaultImage from "../../../assets/default.png";
+
 export default function CreatePostAdmin() {
   const [formData, setFormData] = useState({
     name: "",
@@ -51,9 +54,17 @@ export default function CreatePostAdmin() {
       formDataToSend.append("shortDescription", formData.shortDescription);
       formDataToSend.append("longDescription", formData.longDescription);
 
-      // Add file if it exists
+      // Use default image if no image was selected
       if (formData.featuredImage) {
         formDataToSend.append("featuredImage", formData.featuredImage);
+      } else {
+        // Convert default image to a File object
+        const response = await fetch(defaultImage);
+        const blob = await response.blob();
+        const defaultImageFile = new File([blob], "default.png", {
+          type: "image/png",
+        });
+        formDataToSend.append("featuredImage", defaultImageFile);
       }
 
       await createAdminPost(formDataToSend);
@@ -65,6 +76,7 @@ export default function CreatePostAdmin() {
         name: "",
         shortDescription: "",
         longDescription: "",
+        status: "PUBLISHED",
         featuredImage: null,
       });
       setImagePreview(null);
@@ -143,6 +155,9 @@ export default function CreatePostAdmin() {
           <label className="block text-sm font-medium text-gray-700 mb-2">
             Featured Image
           </label>
+          <p className="text-xs text-gray-500 mb-2">
+            If no image is selected, a default image will be used
+          </p>
 
           <div className="mt-1 flex items-center">
             <div
