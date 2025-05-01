@@ -9,3 +9,29 @@ export const getById = async (id) => {
     handleApiError(error);
   }
 };
+
+export const getAllUsers = async (params) => {
+  try {
+    const res = await apiClient.get(`/admin/users`, { params });
+    return res.data;
+  } catch (error) {
+    handleApiError(error);
+  }
+};
+
+export const updateStatus = async (ids, isBan) => {
+  try {
+    const params = new URLSearchParams();
+    ids.forEach((id) => params.append("ids", id));
+
+    if (isBan) {
+      await apiClient.put(`/admin/users/ban?${params.toString()}`);
+    }
+
+    if (!isBan) {
+      await apiClient.put(`/admin/users/un-ban?${params.toString()}`);
+    }
+  } catch (error) {
+    handleApiError(error);
+  }
+};
