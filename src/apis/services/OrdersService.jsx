@@ -18,3 +18,32 @@ export const createOrder = async (data) => {
     handleApiError(error);
   }
 };
+
+// Add admin order functions
+export const getAdminOrders = async (params) => {
+  try {
+    const res = await apiClient.get(`/admin/orders`, { params });
+    return res.data;
+  } catch (error) {
+    handleApiError(error);
+    return { data: { items: [], meta: { total: 0 } } };
+  }
+};
+
+export const updateOrder = async (path, data) => {
+  try {
+    const res = await apiClient.put(`/admin/orders/${path}`, data);
+    return res.data;
+  } catch (error) {
+    handleApiError(error);
+  }
+};
+
+export const deleteOrder = async (id) => {
+  try {
+    const res = await apiClient.delete(`/admin/orders/${id}`);
+    return res.data;
+  } catch (error) {
+    handleApiError(error);
+  }
+};

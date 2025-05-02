@@ -23,6 +23,7 @@ import { getAllUsers } from "../../../apis/services/UserService";
 import { getFund } from "../../../apis/services/DonationService";
 import { useNavigate } from "react-router-dom";
 import DonationMoneyManagement from "../donation/DonationMoneyManagement";
+import ManageOrders from "../orders/ManageOrders";
 
 export default function AdminDashboard() {
   const [activeMenu, setActiveMenu] = useState(null);
@@ -131,6 +132,12 @@ export default function AdminDashboard() {
       submenuItems: [
         { title: "Sentiment Analytics", path: "/sentiment-statistics" },
       ],
+    },
+    {
+      title: "Orders",
+      icon: <FileText size={20} />,
+      submenu: true,
+      submenuItems: [{ title: "Manage Orders", path: "/manage-orders" }],
     },
   ];
 
@@ -385,6 +392,7 @@ export default function AdminDashboard() {
               {activePath === "/manage-donation-money" && (
                 <DonationMoneyManagement />
               )}
+              {activePath === "/manage-orders" && <ManageOrders />}
             </div>
           )}
         </main>
