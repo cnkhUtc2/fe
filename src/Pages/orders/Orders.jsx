@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { getAllOrders } from "../../apis/services/OrdersService";
 import { Link } from "react-router-dom";
+import UserContext from "../../../UserContext";
 
 export default function Orders() {
+  const user = useContext(UserContext);
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -25,7 +27,10 @@ export default function Orders() {
 
       const response = await getAllOrders(params);
       if (response) {
-        setOrders(response.data);
+        const filteredOrders = response.data.items.filter(
+          (order) => order.createdBy?._id === user._id
+        );
+        setOrders(filteredOrders);
         setTotalPages(Math.ceil(response.total / response.limit));
       }
     } catch (err) {

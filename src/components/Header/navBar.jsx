@@ -50,6 +50,8 @@ function ResponsiveAppBar() {
       ? [
           { name: "Account", path: "/account" },
           { name: "Transaction", path: "/transaction" },
+          { name: "Donation Item Ticket", path: "/donation-items" },
+          { name: "Order", path: "/orders" },
           { name: "Create Post", path: "/create-post" },
         ]
       : []),
@@ -238,7 +240,7 @@ function ResponsiveAppBar() {
               {user ? (
                 <Box sx={{ display: "flex", alignItems: "center" }}>
                   <Typography sx={{ mr: 1 }}>
-                    {isAdmin ? "Hello Admin, " : "Hello User, "}
+                    {isAdmin ? `Hello Admin` : `Hello ${user.username}, `}
                   </Typography>
                   <Tooltip title="Open settings" open={open} arrow>
                     <IconButton sx={{ p: 0 }} onClick={handleOpenUserMenu}>

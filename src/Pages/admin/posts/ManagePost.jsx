@@ -31,7 +31,7 @@ export default function ManagePost() {
 
     try {
       const response = await getAllPosts({ isAll: true });
-
+      console.log(response.data.items);
       setPosts(response.data.items);
       setPagination(response.data.meta);
     } catch (error) {
@@ -259,10 +259,10 @@ export default function ManagePost() {
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="text-sm text-gray-900">
-                      {post.createdBy.name}
+                      {post.createdBy?.name}
                     </div>
                     <div className="text-sm text-gray-500">
-                      {post.createdBy.email}
+                      {post.createdBy?.email}
                     </div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">

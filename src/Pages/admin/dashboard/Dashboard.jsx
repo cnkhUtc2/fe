@@ -24,6 +24,7 @@ import { getFund } from "../../../apis/services/DonationService";
 import { useNavigate } from "react-router-dom";
 import DonationMoneyManagement from "../donation/DonationMoneyManagement";
 import ManageOrders from "../orders/ManageOrders";
+import AdminDonationItems from "../DonationItems/AdminDonationItems";
 
 export default function AdminDashboard() {
   const [activeMenu, setActiveMenu] = useState(null);
@@ -393,6 +394,7 @@ export default function AdminDashboard() {
                 <DonationMoneyManagement />
               )}
               {activePath === "/manage-orders" && <ManageOrders />}
+              {activePath === "/manage-donation-item" && <AdminDonationItems />}
             </div>
           )}
         </main>

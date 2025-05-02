@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import apiClient from "../../apis/AxiosConfiguration";
+import handleApiError from "../../apis/ErrorHandlle";
 
 export default function DonateItems() {
   const navigate = useNavigate();
@@ -9,7 +10,7 @@ export default function DonateItems() {
   const [formData, setFormData] = useState({
     message: "",
     type: "CASE",
-    status: "open",
+    status: "OPEN",
     donorName: "",
     items: [
       {
@@ -138,12 +139,7 @@ export default function DonateItems() {
         formData
       );
 
-      if (response && response.data && response.data._id) {
-        alert("Thank you for your donation!");
-        navigate(`/donate/success?id=${response.data._id}`);
-      } else {
-        throw new Error("Failed to create donation");
-      }
+      navigate(`/donate/success?id=${response.data.data}`);
     } catch (error) {
       console.error("Donation error:", error);
       const errorMessage = error.response

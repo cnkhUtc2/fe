@@ -130,10 +130,10 @@ export default function ManageOrders() {
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-xl font-bold">Orders Management</h1>
         <button
-          onClick={() => (window.location.href = "/admin/orders/create")}
+          onClick={() => window.open("https://5sao.ghn.dev/", "_blank")}
           className="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700"
         >
-          Create New Order
+          Go to GHN Dashboard
         </button>
       </div>
 
@@ -231,59 +231,6 @@ export default function ManageOrders() {
                         >
                           View
                         </button>
-                        <div className="relative">
-                          <button
-                            onClick={() => {
-                              const dropdown = document.getElementById(
-                                `status-dropdown-${order._id}`
-                              );
-                              if (dropdown) {
-                                dropdown.classList.toggle("hidden");
-                              }
-                            }}
-                            disabled={statusUpdating}
-                            className="text-yellow-600 hover:text-yellow-800"
-                          >
-                            Update Status
-                          </button>
-                          <div
-                            id={`status-dropdown-${order._id}`}
-                            className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-10 hidden"
-                          >
-                            <button
-                              onClick={() =>
-                                updateOrderStatus(order._id, "PENDING")
-                              }
-                              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left"
-                            >
-                              PENDING
-                            </button>
-                            <button
-                              onClick={() =>
-                                updateOrderStatus(order._id, "PROCESSING")
-                              }
-                              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left"
-                            >
-                              PROCESSING
-                            </button>
-                            <button
-                              onClick={() =>
-                                updateOrderStatus(order._id, "COMPLETED")
-                              }
-                              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left"
-                            >
-                              COMPLETED
-                            </button>
-                            <button
-                              onClick={() =>
-                                updateOrderStatus(order._id, "CANCELLED")
-                              }
-                              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left"
-                            >
-                              CANCELLED
-                            </button>
-                          </div>
-                        </div>
                       </div>
                     </td>
                   </tr>

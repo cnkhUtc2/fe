@@ -1,31 +1,29 @@
 import { useContext, useEffect, useState } from "react";
-
+import {
+  deleteUserDonationItems,
+  getAllDonationItems,
+} from "../../apis/services/DonationItemsService";
+import UserContext from "../../../UserContext";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { Eye, Trash2, Loader2 } from "lucide-react";
-import UserContext from "../../../../UserContext";
-import {
-  deleteAdminDonationItems,
-  getAllDonationItems,
-  updateDonationItem,
-} from "../../../apis/services/DonationItemsService";
 
 export default function UserDonationItems() {
   const user = useContext(UserContext);
   const [donationItems, setDonationItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [updatingStatus, setUpdatingStatus] = useState(null);
   const navigate = useNavigate();
-
-  const STATUS_OPTIONS = ["OPEN", "ACCEPTED", "DECLINED", "ORDER CREATED"];
 
   useEffect(() => {
     const fetchAllDonations = async () => {
       try {
         setLoading(true);
         const res = await getAllDonationItems({ isAll: true, limit: 0 });
-        setDonationItems(res.data.items);
+        const filteredItems = res.data.items.filter(
+          (item) => item.createdBy?._id === user._id
+        );
+        setDonationItems(filteredItems);
       } catch (err) {
         console.error("Error fetching donation items:", err);
         setError("Failed to load donation items. Please try again later.");
@@ -42,7 +40,7 @@ export default function UserDonationItems() {
   const handleDelete = async (id) => {
     if (window.confirm("Are you sure you want to delete this donation item?")) {
       try {
-        await deleteAdminDonationItems([id]);
+        await deleteUserDonationItems([id]);
         setDonationItems((items) => items.filter((item) => item._id !== id));
         alert("Donation item deleted successfully");
       } catch (err) {
@@ -56,25 +54,8 @@ export default function UserDonationItems() {
     navigate(`/donation-item/${id}`);
   };
 
-  const handleStatusChange = async (id, newStatus) => {
-    try {
-      setUpdatingStatus(id);
-      await updateDonationItem(id, { status: newStatus });
-
-      // Update the local state with the new status
-      setDonationItems((prevItems) =>
-        prevItems.map((item) =>
-          item._id === id ? { ...item, status: newStatus } : item
-        )
-      );
-
-      alert(`Status updated to ${newStatus} successfully`);
-    } catch (err) {
-      console.error("Error updating donation status:", err);
-      alert("Failed to update donation status. Please try again.");
-    } finally {
-      setUpdatingStatus(null);
-    }
+  const handleCreateOrder = (id) => {
+    navigate(`/orders/create/${id}`);
   };
 
   if (loading) {
@@ -96,6 +77,16 @@ export default function UserDonationItems() {
 
   return (
     <div className="container mx-auto p-4">
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-2xl font-bold text-gray-800">My Donation Items</h1>
+        <Link
+          to="/donate/items"
+          className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+        >
+          Create New Donation
+        </Link>
+      </div>
+
       {donationItems.length === 0 ? (
         <div className="bg-gray-50 p-8 text-center rounded-md">
           <p className="text-gray-600">
@@ -155,10 +146,6 @@ export default function UserDonationItems() {
                           ? "bg-green-100 text-green-800"
                           : item.status === "ACCEPTED"
                           ? "bg-blue-100 text-blue-800"
-                          : item.status === "DECLINED"
-                          ? "bg-red-100 text-red-800"
-                          : item.status === "ORDER CREATED"
-                          ? "bg-purple-100 text-purple-800"
                           : "bg-gray-100 text-gray-800"
                       }`}
                     >
@@ -184,30 +171,26 @@ export default function UserDonationItems() {
                       >
                         <Trash2 size={18} />
                       </button>
-                      <div className="relative">
-                        <select
-                          value={item.status}
-                          onChange={(e) =>
-                            handleStatusChange(item._id, e.target.value)
-                          }
-                          disabled={updatingStatus === item._id}
-                          className="block w-full bg-white border border-gray-300 hover:border-gray-400 px-2 py-1 rounded-md shadow-sm text-sm leading-5 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                      {item.status === "ACCEPTED" && (
+                        <button
+                          onClick={() => handleCreateOrder(item._id)}
+                          className="bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded-lg shadow-md flex items-center gap-2 transition duration-300"
+                          title="Create Order"
                         >
-                          {STATUS_OPTIONS.map((status) => (
-                            <option key={status} value={status}>
-                              {status}
-                            </option>
-                          ))}
-                        </select>
-                        {updatingStatus === item._id && (
-                          <div className="absolute right-2 top-1/2 transform -translate-y-1/2">
-                            <Loader2
-                              size={16}
-                              className="animate-spin text-blue-500"
-                            />
-                          </div>
-                        )}
-                      </div>
+                          <svg
+                            className="w-5 h-5"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path d="M3 3h18v4H3V3zM3 9h18v12H3V9z" />
+                            <path d="M16 13h-4v4h4v-4z" />
+                          </svg>
+                          <span>Order</span>
+                        </button>
+                      )}
                     </div>
                   </td>
                 </tr>

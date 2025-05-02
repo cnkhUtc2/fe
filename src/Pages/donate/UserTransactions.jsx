@@ -1,8 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { getAllTransactions } from "../../apis/services/DonationService";
 import { useNavigate } from "react-router-dom";
+import UserContext from "../../../UserContext";
 
 export default function UserTransactions() {
+  const user = useContext(UserContext);
   const [transactions, setTransactions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -13,7 +15,10 @@ export default function UserTransactions() {
       try {
         setLoading(true);
         const res = await getAllTransactions({ isAll: true });
-        setTransactions(res.data.items);
+        const filteredTransactions = res.data.items.filter(
+          (transaction) => transaction.createdBy?._id === user._id
+        );
+        setTransactions(filteredTransactions);
       } catch (err) {
         setError("Failed to load transactions");
         console.error(err);
@@ -23,7 +28,7 @@ export default function UserTransactions() {
     };
 
     fetchAllTransactions();
-  }, []);
+  }, [user]);
 
   const handleDetail = (id) => {
     navigate(`/transaction/${id}`);
@@ -45,7 +50,7 @@ export default function UserTransactions() {
     return new Intl.NumberFormat("en-US", {
       minimumFractionDigits: 0,
       maximumFractionDigits: 0,
-    }).format(amount);
+    }).format(amount / 100);
   };
 
   const getStatusBadgeClass = (status) => {

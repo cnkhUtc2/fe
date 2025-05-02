@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { createOrder } from "../../apis/services/OrdersService";
-import { getAllDonationItems } from "../../apis/services/DonationItemsService";
+import {
+  getAllDonationItems,
+  getDonationItemById,
+} from "../../apis/services/DonationItemsService";
 
 export default function CreateOrder() {
   const navigate = useNavigate();
@@ -47,9 +50,9 @@ export default function CreateOrder() {
   const fetchDonationItem = async (id) => {
     setLoading(true);
     try {
-      const response = await getAllDonationItems({ id });
-      if (response && response.data && response.data.length > 0) {
-        const item = response.data[0];
+      const response = await getDonationItemById(donationItemId);
+      if (response && response.data) {
+        const item = response.data;
         setDonationItem(item);
 
         // Pre-populate form with item data
@@ -105,11 +108,9 @@ export default function CreateOrder() {
     setFormSubmitting(true);
 
     try {
-      console.log(formData);
-
       const response = await createOrder(formData);
 
-      if (response) {
+      if (response.data) {
         alert("Order created successfully!");
         navigate("/orders");
       } else {
