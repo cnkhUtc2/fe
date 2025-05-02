@@ -18,3 +18,23 @@ export const createDonationItem = async (data) => {
     handleApiError(error);
   }
 };
+
+export const getAdminDonationItems = async (params) => {
+  try {
+    const res = await apiClient.get(`/admin/donation-items`, { params });
+    return res.data;
+  } catch (error) {
+    handleApiError(error);
+    return { data: { items: [], meta: { total: 0 } } };
+  }
+};
+
+export const updateDonationItem = async (id, data) => {
+  try {
+    const res = await apiClient.put(`/admin/donation-items/${id}`, data);
+    return res.data;
+  } catch (error) {
+    handleApiError(error);
+  }
+};
+
