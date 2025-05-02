@@ -10,6 +10,24 @@ export const getById = async (id) => {
   }
 };
 
+export const checkPassword = async (data) => {
+  try {
+    const res = await apiClient.post(`/front/auth/check-pass`, data);
+    return res.data;
+  } catch (error) {
+    handleApiError(error);
+  }
+};
+
+export const updateUserAccount = async (id, data) => {
+  try {
+    const res = await apiClient.put(`/front/users/update-account/${id}`, data);
+    return res.data;
+  } catch (error) {
+    handleApiError(error);
+  }
+};
+
 export const getAllUsers = async (params) => {
   try {
     const res = await apiClient.get(`/admin/users`, { params });
