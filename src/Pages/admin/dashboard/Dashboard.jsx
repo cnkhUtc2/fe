@@ -21,6 +21,8 @@ import { getAllTickets } from "../../../apis/services/TicketService";
 import { getAllReliefCases } from "../../../apis/services/ReliefCaseService";
 import { getAllUsers } from "../../../apis/services/UserService";
 import { getFund } from "../../../apis/services/DonationService";
+import { useNavigate } from "react-router-dom";
+import DonationMoneyManagement from "../donation/DonationMoneyManagement";
 
 export default function AdminDashboard() {
   const [activeMenu, setActiveMenu] = useState(null);
@@ -31,6 +33,7 @@ export default function AdminDashboard() {
   const [totalReliefCases, setTotalReliefCases] = useState(0);
   const [totalUser, setTotalUsers] = useState(0);
   const [fund, setFund] = useState(0);
+  const naviage = useNavigate();
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -57,7 +60,7 @@ export default function AdminDashboard() {
 
     const fetchFund = async () => {
       const res = await getFund();
-      setTotalUsers(res.data.currentAmount);
+      setFund(res.data.currentAmount);
     };
 
     fetchAllTicket();
@@ -102,9 +105,8 @@ export default function AdminDashboard() {
       icon: <DollarSign size={20} />,
       submenu: true,
       submenuItems: [
-        { title: "Manage Donations", path: "/manage-donations" },
-        { title: "Item Donations", path: "/manage-donation-item" },
-        { title: "Money Donations", path: "/manage-donation-money" },
+        { title: "Manage money Donations", path: "/manage-donation-money" },
+        { title: "Manage Item Donations", path: "/manage-donation-item" },
       ],
     },
     {
@@ -379,6 +381,9 @@ export default function AdminDashboard() {
               {activePath === "/manage-post" && <ManagePost />}
               {activePath === "/sentiment-statistics" && (
                 <SentimentStatistics />
+              )}
+              {activePath === "/manage-donation-money" && (
+                <DonationMoneyManagement />
               )}
             </div>
           )}

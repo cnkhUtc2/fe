@@ -46,7 +46,13 @@ function ResponsiveAppBar() {
   }, [user]);
 
   const settings = [
-    ...(!isAdmin ? [{ name: "Account", path: "/account" }] : []),
+    ...(!isAdmin
+      ? [
+          { name: "Account", path: "/account" },
+          { name: "Transaction", path: "/transaction" },
+          { name: "Create Post", path: "/create-post" },
+        ]
+      : []),
 
     ...(isAdmin ? [{ name: "Dashboard", path: "/admin" }] : []),
     { name: "Logout", action: () => handleLogout() },

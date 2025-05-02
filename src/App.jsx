@@ -32,6 +32,8 @@ import PostDetail from "./Pages/posts/PostDetail";
 import FloodAidFeed from "./Pages/community/Community";
 import Sentiment from "./Pages/model-test/Sentiment";
 import PredictFlood from "./Pages/predict-flood/PredictFlood";
+import UserTransactions from "./Pages/donate/UserTransactions";
+import TransactionDetail from "./Pages/donate/TransactionDetail";
 
 function App() {
   return (
@@ -64,8 +66,10 @@ function App() {
           <Route path="/admin" element={<AdminDashboard />} />
           <Route path="/stories" element={<StoriesInPhoto />} />
           <Route path="/test-model" element={<Sentiment />} />
+          <Route path="/transaction" element={<UserTransactions />} />
           <Route path="/tickets/:id" element={<TicketDetail />} />
           <Route path="/post/:id" element={<PostDetail />} />
+          <Route path="/transaction/:id" element={<TransactionDetail />} />
           <Route path="/profile/:id" element={<Profile />} />
 
           <Route

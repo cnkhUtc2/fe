@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Mail, MapPin, FileText, Info } from "lucide-react";
+import { Mail, MapPin, FileText, Info, AlertTriangle } from "lucide-react";
 import { useParams } from "react-router-dom";
 import {
   getTicketById,
@@ -29,6 +29,7 @@ export default function CreateReliefCase() {
     contactPhone: "",
     imageUrl: "",
     supportTicket: "",
+    priority: "MEDIUM",
   });
 
   useEffect(() => {
@@ -108,6 +109,7 @@ export default function CreateReliefCase() {
         contactEmail: "",
         contactPhone: "",
         imageUrl: "",
+        priority: "MEDIUM",
       });
 
       setTimeout(() => {
@@ -120,6 +122,22 @@ export default function CreateReliefCase() {
         text:
           error.message || "Failed to create relief case. Please try again.",
       });
+    }
+  };
+
+  // Function to get appropriate color for priority badge
+  const getPriorityColor = (priority) => {
+    switch (priority) {
+      case "LOW":
+        return "bg-gray-100 text-gray-800";
+      case "MEDIUM":
+        return "bg-blue-100 text-blue-800";
+      case "HIGH":
+        return "bg-orange-100 text-orange-800";
+      case "EMERGENCY":
+        return "bg-red-100 text-red-800";
+      default:
+        return "bg-gray-100 text-gray-800";
     }
   };
 
@@ -187,6 +205,38 @@ export default function CreateReliefCase() {
 
         <div className="space-y-1">
           <label
+            htmlFor="priority"
+            className="block text-sm font-medium text-gray-700 flex items-center"
+          >
+            <AlertTriangle className="h-4 w-4 mr-2" />
+            Priority <span className="text-red-500">*</span>
+          </label>
+          <div className="flex items-center">
+            <select
+              id="priority"
+              name="priority"
+              value={formData.priority}
+              onChange={handleChange}
+              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              required
+            >
+              <option value="LOW">LOW</option>
+              <option value="MEDIUM">MEDIUM</option>
+              <option value="HIGH">HIGH</option>
+              <option value="EMERGENCY">EMERGENCY</option>
+            </select>
+            <div
+              className={`ml-2 px-3 py-1 rounded-full ${getPriorityColor(
+                formData.priority
+              )}`}
+            >
+              {formData.priority}
+            </div>
+          </div>
+        </div>
+
+        <div className="space-y-1">
+          <label
             htmlFor="location"
             className="block text-sm font-medium text-gray-700 flex items-center"
           >
@@ -215,7 +265,7 @@ export default function CreateReliefCase() {
                 {ticket.attachments
                   .filter((att) => att.mime && att.mime.startsWith("image/"))
                   .map((att, idx) => (
-                    <div>
+                    <div key={idx}>
                       <img
                         src={att.filePath}
                         alt={att.alt || `Image ${idx + 1}`}
