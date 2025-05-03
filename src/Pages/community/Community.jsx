@@ -8,6 +8,7 @@ import {
   Shield,
 } from "lucide-react";
 import { getAllPosts } from "../../apis/services/PostService";
+import { useNavigate } from "react-router-dom";
 
 const formatDate = (dateString) => {
   const date = new Date(dateString);
@@ -151,6 +152,8 @@ const FloodAidPost = ({ post }) => {
 };
 
 const FloodAidFeed = () => {
+  const navigate = useNavigate();
+
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
@@ -171,7 +174,12 @@ const FloodAidFeed = () => {
           <h1 className="text-2xl font-bold text-blue-800">
             Flood Aid Community
           </h1>
-          <button className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors">
+          <button
+            className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors"
+            onClick={() => {
+              navigate("/create-post");
+            }}
+          >
             Share Your Story
           </button>
         </div>

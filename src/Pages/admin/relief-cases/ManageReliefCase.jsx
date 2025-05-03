@@ -64,6 +64,22 @@ export default function ManageReliefCase() {
     }, 3000);
   };
 
+  // Get priority badge styling based on priority level
+  const getPriorityBadgeStyle = (priority) => {
+    switch (priority) {
+      case "LOW":
+        return "bg-gray-100 text-gray-800";
+      case "MEDIUM":
+        return "bg-blue-100 text-blue-800";
+      case "HIGH":
+        return "bg-orange-100 text-orange-800";
+      case "EMERGENCY":
+        return "bg-red-100 text-red-800";
+      default:
+        return "bg-gray-100 text-gray-800";
+    }
+  };
+
   // Render loading state
   if (loading) {
     return (
@@ -127,6 +143,9 @@ export default function ManageReliefCase() {
                 Status
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Priority
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Contact Email
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -137,7 +156,7 @@ export default function ManageReliefCase() {
           <tbody className="divide-y divide-gray-200">
             {reliefCases.length === 0 ? (
               <tr>
-                <td colSpan="4" className="px-6 py-4 text-center text-gray-500">
+                <td colSpan="5" className="px-6 py-4 text-center text-gray-500">
                   No relief cases found
                 </td>
               </tr>
@@ -154,6 +173,15 @@ export default function ManageReliefCase() {
                       }`}
                     >
                       {reliefCase.status}
+                    </span>
+                  </td>
+                  <td className="px-6 py-4">
+                    <span
+                      className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getPriorityBadgeStyle(
+                        reliefCase.priority
+                      )}`}
+                    >
+                      {reliefCase.priority || "NOT SET"}
                     </span>
                   </td>
                   <td className="px-6 py-4 text-gray-700">

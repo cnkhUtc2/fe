@@ -56,7 +56,7 @@ export default function CreatePost() {
         throw new Error("No content to analyze");
       }
 
-      const data = await getSentimentScore(FAST_API_URL, text);
+      const data = await getSentimentScore(FAST_API_URL, { text: text });
 
       return {
         positive: data.sentiment_scores.Positive,
@@ -67,7 +67,6 @@ export default function CreatePost() {
       };
     } catch (error) {
       console.error("Error analyzing sentiment:", error);
-      // Return default values in case of error
       return {
         positive: 0.33,
         negative: 0.33,
