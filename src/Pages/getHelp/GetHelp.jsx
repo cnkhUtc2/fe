@@ -1,7 +1,7 @@
 import React from "react";
 import Hero from "./Hero"; // Import component Hero
 function GetHelp() {
-    return Hero();
+  return Hero();
 }
 
-export default GetHelp;  // ✅ Cần có dòng này!
+export default GetHelp; // ✅ Cần có dòng này!

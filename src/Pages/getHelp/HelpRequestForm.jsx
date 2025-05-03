@@ -44,9 +44,11 @@ const HelpRequestForm = ({ onClose }) => {
     } catch (err) {
       console.error("Error submitting form:", err.message);
       if (err.response?.status === 401) {
-        setError("Vui lòng đăng nhập để gửi đơn xin hỗ trợ.");
+        setError("Please log in to submit a support request.");
       } else {
-        setError("Có lỗi xảy ra khi gửi đơn. Vui lòng thử lại sau.");
+        setError(
+          "An error occurred while submitting the form. Please try again later."
+        );
       }
     } finally {
       setIsSubmitting(false);
@@ -69,7 +71,9 @@ const HelpRequestForm = ({ onClose }) => {
   return (
     <div className="fixed inset-0 bg-white/20 backdrop-blur-sm flex items-center justify-center z-50">
       <div className="bg-white p-8 rounded-lg max-w-2xl w-full mx-4 shadow-xl">
-        <h2 className="text-2xl font-bold mb-6 text-center">Đơn xin hỗ trợ</h2>
+        <h2 className="text-2xl font-bold mb-6 text-center">
+          Support Request Form
+        </h2>
         {error && (
           <div className="mb-4 p-3 bg-red-100 text-red-700 rounded-md">
             {error}
@@ -78,7 +82,7 @@ const HelpRequestForm = ({ onClose }) => {
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label className="block text-sm font-medium text-gray-700">
-              Mục đích
+              Purpose
             </label>
             <input
               type="text"
@@ -92,7 +96,7 @@ const HelpRequestForm = ({ onClose }) => {
 
           <div>
             <label className="block text-sm font-medium text-gray-700">
-              Mô tả chi tiết
+              Detailed Description
             </label>
             <textarea
               name="description"
@@ -107,7 +111,7 @@ const HelpRequestForm = ({ onClose }) => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium text-gray-700">
-                Tỉnh/Thành phố
+                Province/City
               </label>
               <input
                 type="text"
@@ -120,7 +124,7 @@ const HelpRequestForm = ({ onClose }) => {
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700">
-                Quận/Huyện
+                District
               </label>
               <input
                 type="text"
@@ -136,7 +140,7 @@ const HelpRequestForm = ({ onClose }) => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium text-gray-700">
-                Phường/Xã
+                Ward/Commune
               </label>
               <input
                 type="text"
@@ -149,7 +153,7 @@ const HelpRequestForm = ({ onClose }) => {
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700">
-                Địa chỉ cụ thể
+                Specific Address
               </label>
               <input
                 type="text"
@@ -164,7 +168,7 @@ const HelpRequestForm = ({ onClose }) => {
 
           <div>
             <label className="block text-sm font-medium text-gray-700">
-              Hình ảnh đính kèm
+              Attached Images
             </label>
             <input
               type="file"
@@ -177,6 +181,7 @@ const HelpRequestForm = ({ onClose }) => {
                                 file:text-sm file:font-semibold
                                 file:bg-yellow-50 file:text-red-700
                                 hover:file:bg-yellow-100"
+              required
             />
           </div>
 
@@ -205,14 +210,14 @@ const HelpRequestForm = ({ onClose }) => {
               onClick={onClose}
               className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50"
             >
-              Hủy
+              Cancel
             </button>
             <button
               type="submit"
               disabled={isSubmitting}
               className="px-4 py-2 bg-yellow-400 text-red-700 rounded-md font-semibold hover:bg-yellow-300 disabled:opacity-50"
             >
-              {isSubmitting ? "Đang gửi..." : "Gửi đơn"}
+              {isSubmitting ? "Submitting..." : "Submit Request"}
             </button>
           </div>
         </form>
