@@ -69,11 +69,6 @@ export default function ManageTicket() {
     );
   }
 
-  const handleViewTicket = (ticketId) => {
-    // Navigate programmatically
-    navigate(`/tickets/${ticketId}`);
-  };
-
   // Render the relief case status indicator
   const renderReliefCaseStatus = (isCreatedReliefCase) => {
     if (isCreatedReliefCase) {

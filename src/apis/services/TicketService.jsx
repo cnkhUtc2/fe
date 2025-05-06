@@ -19,7 +19,7 @@ export const createSupportTicket = async (data) => {
 
 export const getAllTickets = async (params) => {
   try {
-    const res = await apiClient.get(`/admin/tickets`, { params });
+    const res = await apiClient.get(`/front/tickets`, { params });
     return res.data;
   } catch (error) {
     handleApiError(error);
@@ -28,7 +28,7 @@ export const getAllTickets = async (params) => {
 
 export const getTicketById = async (id) => {
   try {
-    const res = await apiClient.get(`/admin/tickets/${id}`);
+    const res = await apiClient.get(`/front/tickets/${id}`);
     return res.data;
   } catch (error) {
     handleApiError(error);

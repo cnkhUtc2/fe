@@ -29,6 +29,8 @@ export default function TicketDetail() {
   const [updating, setUpdating] = useState(false);
   const [updateMessage, setUpdateMessage] = useState({ type: "", text: "" });
 
+  const handleCreatePost = () => {};
+
   useEffect(() => {
     const fetchTicketDetail = async () => {
       try {

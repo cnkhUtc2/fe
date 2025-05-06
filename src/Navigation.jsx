@@ -38,6 +38,8 @@ import UserTransactions from "./Pages/donate/UserTransactions";
 import TransactionDetail from "./Pages/donate/TransactionDetail";
 import UserDonationItems from "./Pages/donate/UserDonationItem";
 import DonationItemDetail from "./Pages/donate/DonationItemDetail";
+import FloodAidReliefCaseDetail from "./Pages/community/FloodAidReliefCaseDetail";
+import DonatePanelReliefCase from "./Pages/donate/DonatePanelReliefCase";
 
 function Navigation() {
   const location = useLocation();
@@ -72,6 +74,14 @@ function Navigation() {
       <Route path="/test-model" element={<Sentiment />} />
       <Route path="/transaction" element={<UserTransactions />} />
       <Route path="/donation-items" element={<UserDonationItems />} />
+      <Route
+        path="/donate-relief-case/:id"
+        element={<DonatePanelReliefCase />}
+      />
+      <Route
+        path="/flood-aid-relief-case/:id"
+        element={<FloodAidReliefCaseDetail />}
+      />
       <Route path="/donation-item/:id" element={<DonationItemDetail />} />
       <Route path="/orders/:id" element={<OrderDetail />} />
       <Route path="/tickets/:id" element={<TicketDetail />} />

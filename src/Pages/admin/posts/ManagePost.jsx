@@ -7,8 +7,10 @@ import {
 } from "../../../apis/services/PostService";
 import { PostPagination } from "./PostPagination";
 import PostStatusModal from "./PostStatusModal";
+import { useNavigate } from "react-router-dom";
 
 export default function ManagePost() {
+  const navigate = useNavigate();
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
@@ -121,9 +123,7 @@ export default function ManagePost() {
   };
 
   const handleView = (postId) => {
-    // Navigate to view page
-    console.log("Viewing post with ID:", postId);
-    // You would add navigation logic here
+    navigate(`/post/${postId}`);
   };
 
   return (
