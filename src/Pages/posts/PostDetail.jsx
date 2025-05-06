@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
-import { Clock, Calendar, User } from "lucide-react";
-import { useParams } from "react-router-dom";
+import { Clock, Calendar, User, Heart } from "lucide-react";
+import { useNavigate, useParams } from "react-router-dom";
 import { getPost } from "../../apis/services/PostService";
 
 export default function PostDetail() {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [post, setPost] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -24,6 +25,10 @@ export default function PostDetail() {
 
     fetchPostDetail();
   }, [id]);
+
+  const handleDonateClick = () => {
+    navigate("/donate");
+  };
 
   if (loading) {
     return (
@@ -122,7 +127,6 @@ export default function PostDetail() {
                   {post.longDescription}
                 </p>
               </div>
-              \{" "}
             </div>
           </div>
 
@@ -139,6 +143,22 @@ export default function PostDetail() {
                 <p className="text-gray-600">Author</p>
               </div>
             </div>
+          </div>
+
+          {/* Donate Button Section */}
+          <div className="bg-white rounded-xl shadow-lg p-8 mb-8 text-center">
+            <h3 className="text-xl font-bold mb-4">Support Our Work</h3>
+            <p className="text-gray-600 mb-4">
+              If you found this content valuable, consider making a donation to
+              support more content like this.
+            </p>
+            <button
+              onClick={handleDonateClick}
+              className="px-6 py-3 bg-red-500 text-white rounded-md hover:bg-red-600 transition flex items-center justify-center gap-2 mx-auto"
+            >
+              <Heart size={20} />
+              <span className="font-medium">Donate Now</span>
+            </button>
           </div>
 
           {/* Share and Action Buttons */}
